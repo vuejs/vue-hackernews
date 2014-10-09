@@ -34,12 +34,13 @@
     <!-- comment component template -->
     <script type="x/template" id="comment-template">
       <div class="comhead">
+        <a class="toggle" v-on="click:open = !open">{{open ? '[-]' : '[+]'}}</a>
         <a v-on="click:$root.openUser(by)">{{by}}</a>
         {{time | fromNow}} ago |
         <a href="https://news.ycombinator.com/item?id={{id}}">link</a>
       </div>
-      <div v-html="text"></div>
-      <ul class="child-comments" v-if="kids">
+      <div v-html="text" v-show="open"></div>
+      <ul class="child-comments" v-if="kids" v-show="open">
         <li v-repeat="comments" v-component="comment"></li>
       </ul>
     </script>

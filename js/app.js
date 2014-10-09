@@ -29,6 +29,7 @@ Vue.component('comment', {
   template: '#comment-template',
   data: function () {
     return {
+      open: true,
       comments: null
     }
   },
