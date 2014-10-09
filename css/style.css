@@ -48,12 +48,13 @@ a {
 }
 #nav {
   padding: 10px 10px 10px 40px;
-  background-color: #333;
-  color: #fff;
+  border-top: 2px solid #f60;
 }
 #nav a {
-  color: #fff;
   margin-right: 10px;
+}
+#nav .source {
+  float: right;
 }
 .story {
   padding: 2px 0 2px 40px;

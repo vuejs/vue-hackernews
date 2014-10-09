@@ -72,6 +72,10 @@
       <div id="nav" v-show="stories.length > 0">
         <a v-if="page > 1" href="#{{page - 1}}">&lt; prev</a>
         <a v-if="page < 4" href="#{{page + 1}}">more...</a>
+        <span class="source">
+          Built with <a href="http://vuejs.org" target="_blank">Vue.js</a> |
+          <a href="https://github.com/yyx990803/vue-hackernews" target="_blank">Source</a>
+        </span>
       </div>
 
       <!-- comments sidebar -->
