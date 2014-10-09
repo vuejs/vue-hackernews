@@ -53,6 +53,9 @@ a {
 #nav a {
   margin-right: 10px;
 }
+#nav a:hover {
+  text-decoration: underline;
+}
 #nav .source {
   float: right;
 }
