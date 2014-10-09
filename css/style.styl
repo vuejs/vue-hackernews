@@ -12,6 +12,7 @@ ul
   margin 5px 0
 
 a
+  color #000
   cursor pointer
   text-decoration none
 
@@ -36,8 +37,6 @@ a
     display inline-block
     vertical-align middle
     margin 0
-    a
-      color #000
 
 #yc
   border 1px solid #fff
@@ -55,15 +54,13 @@ a
     color #fff
     margin-right 10px
 
-li.story
+.story
   padding 2px 0 2px 40px
   position relative
   transition background-color .2s ease
   p
     margin 2px 0
-  .title
-    color #000
-    &:visited
+  .title:visited
       color $gray
   .index
     color $gray
@@ -73,15 +70,16 @@ li.story
     left 0
     top 4px
   .domain, .subtext
-    font-size .75em
+    font-size 11px
     color $gray
+    a
+      color $gray
   .subtext a:hover
       text-decoration underline
   &.current
     background-color darken($bg, 5%)
 
 .sidebar
-  color $gray
   transition all .3s ease
   position fixed
   right 0
@@ -90,7 +88,7 @@ li.story
   background-color $bg
   box-shadow 0 0 8px rgba(0,0,0,.15)
   overflow-y scroll
-  width 500px
+  width 600px
   box-sizing border-box
   padding 10px 30px
   .close
@@ -98,18 +96,45 @@ li.story
     top 0
     right 0
     padding 10px
+    font-size 20px
   &.v-enter, &.v-leave
     -webkit-transform translate3d(100%,0,0)
     transform translate3d(100%,0,0)
-  &.user
-    li
-      margin 5px 0
-    .label
-      display inline-block
-      min-width 60px
-    .about
-      margin-top 1em
 
-@media screen and (max-width:500px)
+.sidebar.user
+  color $gray
+  li
+    margin 5px 0
+  .label
+    display inline-block
+    min-width 60px
+  .about
+    margin-top 1em
+  .links a
+    text-decoration underline
+
+.sidebar.comments
+  .story
+    padding-left 0
+    margin-bottom 30px
+    .index, .comments-link
+      display none
+  .comhead
+    color $gray
+    font-size 11px
+    margin-bottom 8px
+    a
+      color $gray
+  .comment
+    margin-bottom 20px
+    p
+      margin 8px 0 0
+      font-size 12px
+  .child-comments
+    margin 8px 0 8px 20px
+    
+
+
+@media screen and (max-width:600px)
   .sidebar
     width 100%

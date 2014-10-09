@@ -1,115 +1,161 @@
-var api = new Firebase('https://hacker-news.firebaseio.com/v0')
-var storiesPerPage = 30
-var topStories = []
-
 /**
- * Get the page number from the current hash.
- *
- * @return {Number}
+ * A story component.
  */
 
-function getPage () {
-  return +window.location.hash.slice(1) || 1
-}
-
-/**
- * React to top stories realtime updates.
- */
-
-api.child('topstories').on('value', function (snapshot) {
-  topStories = snapshot.val()
-  loadStories()
+Vue.component('story', {
+  template: '#story-template',
+  computed: {
+    index: function () {
+      return (this.$root.page - 1) * 30 + this.$index + 1
+    },
+    href: function () {
+      return this.url || ('http://news.ycombinator.com/item?id=' + this.id)
+    },
+    isJob: function () {
+      return this.type === 'job'
+    },
+    highlighted: function () {
+      return this.$root.inspectedStory.id === this.id
+    }
+  }
 })
 
 /**
- * React to hash change.
+ * A comment component that recursively renders its own
+ * children.
  */
 
-window.addEventListener('hashchange', loadStories)
-
-/**
- * Load the stories with pagination.
- */
-
-function loadStories () {
-  var page = getPage()
-  if (page > 4) {
-    alert(
-      'Sorry, but the HN API currently only offers the ' +
-      'top 100 items :('
-    )
-    return
-  }
-
-  var stories = []
-  var start = (page - 1) * storiesPerPage
-  var end = page * storiesPerPage
-  var toLoad = Math.min(storiesPerPage, 100 - start)
-
-  topStories.slice(start, end).forEach(function (id) {
-    api.child('item/' + id).once('value', addItem)
-  })
-
-  function addItem (snapshot) {
-    stories.push(snapshot.val())
-    if (stories.length >= toLoad) {
-      done()
+Vue.component('comment', {
+  template: '#comment-template',
+  data: function () {
+    return {
+      comments: null
+    }
+  },
+  created: function () {
+    if (this.kids) {
+      store.fetchItems(this.kids, function (comments) {
+        this.comments = comments
+      }.bind(this))
     }
   }
-
-  function done () {
-    app.stories = stories
-    app.page = page
-  }
-}
+})
 
 /**
- * Boot up the Vue app =====================================
+ * Filter that onverts a timestamp to the format of
+ * "xxx minutes/hours/days ago".
+ *
+ * @param {Number} time
+ * @return {String}
+ */
+
+Vue.filter('fromNow', function (time) {
+  var between = Date.now() / 1000 - Number(time)
+  if (between < 3600) {
+    return ~~(between / 60) + ' minutes'
+  } else if (between < 86400) {
+    return ~~(between / 3600) + ' hours'
+  } else {
+    return ~~(between / 86400) + ' days'
+  }
+})
+
+/**
+ * Filter that xtracts the domain from a url.
+ *
+ * @param {String}
+ * @return {String}
+ */
+
+Vue.filter('domain', function (url) {
+  var a = document.createElement('a')
+  a.href = url
+  return a.hostname
+})
+
+/**
+ * Kick off the main app interface.
  */
 
 var app = new Vue({
+
   el: '#app',
+
   data: {
     page: 1,
     stories: [],
-    user: null,
-    story: null
+    inspectedUser: null,
+    inspectedStory: null,
+    inspectedComments: null
   },
+
   created: function () {
+    // refresh on story list update
+    store.onUpdate(this.refresh.bind(this))
+    // scroll back to top when switching pages
     this.$watch('page', function () {
       window.scrollTo(0, 0)
     })
   },
-  filters: {
-    fromNow: function (time) {
-      var between = Date.now() / 1000 - Number(time)
-      if (between < 3600) {
-        return ~~(between / 60) + ' minutes'
-      } else if (between < 86400) {
-        return ~~(between / 3600) + ' hours'
-      } else {
-        return ~~(between / 86400) + ' days'
-      }
-    },
-    domain: function (url) {
-      var a = document.createElement('a')
-      a.href = url
-      return a.hostname
-    }
-  },
+
   methods: {
+
+    /**
+     * Refresh the displayed stories list based on current
+     * page.
+     */
+
+    refresh: function () {
+      var page = +window.location.hash.slice(1) || 1
+      if (page > 4) {
+        alert(
+          'Sorry, but the HN API currently offers only ' +
+          'the top 100 items :('
+        )
+        return
+      }
+      store.fetchStories(page, function (stories) {
+        this.page = page
+        this.stories = stories
+      }.bind(this))
+    },
+
+    /**
+     * Open user sidebar.
+     */
+
     openUser: function (id) {
-      app.story = null
-      api.child('user/' + id).once('value', function (snapshot) {
-        app.user = snapshot.val()
-      })
+      store.fetchUser(id, function (user) {
+        this.inspectedUser = user
+      }.bind(this))
     },
+
+    /**
+     * Open comments sidebar.
+     */
+
     openComments: function (story) {
-      app.user = null
-      app.story = story
+      this.inspectedUser = null
+      store.fetchItems(story.kids, function (comments) {
+        this.inspectedComments = comments
+      }.bind(this))
+      this.inspectedStory = story
     },
+
+    /**
+     * Close all sidebars.
+     */
+
     closeSidebar: function () {
-      app.story = app.user = null
+      this.inspectedStory = this.inspectedUser = null
     }
   }
+})
+
+/**
+ * React to hashchange for simple routing
+ */
+
+window.addEventListener('hashchange', function () {
+  app.refresh()
 })

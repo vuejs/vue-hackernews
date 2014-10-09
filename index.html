@@ -9,9 +9,47 @@
     <script src="js/vue.min.js"></script>
   </head>
   <body>
+
+    <!-- story component template -->
+    <script type="x/template" id="story-template">
+      <span class="index">{{index}}.</span>
+      <p>
+        <a class="title" href="{{href}}" target="_blank">{{title}}</a>
+        <span class="domain" v-show="!isJob">
+          ({{url | domain}})
+        </span>
+      </p>
+      <p class="subtext">
+        <span v-show="!isJob">
+          {{score}} points by
+          <a v-on="click:$root.openUser(by)">{{by}}</a>
+        </span>
+        {{time | fromNow}} ago
+        <span class="comments-link" v-show="!isJob">
+          | <a v-on="click:$root.openComments($data)">comments</a>
+        </span>
+      </p>
+    </script>
+
+    <!-- comment component template -->
+    <script type="x/template" id="comment-template">
+      <div class="comhead">
+        <a v-on="click:$root.openUser(by)">{{by}}</a>
+        {{time | fromNow}} ago |
+        <a href="https://news.ycombinator.com/item?id={{id}}">link</a>
+      </div>
+      <div v-html="text"></div>
+      <ul class="child-comments" v-if="kids">
+        <li v-repeat="comments" v-component="comment"></li>
+      </ul>
+    </script>
+
+    <!-- main app -->
     <div id="app">
+
       <!-- loading -->
       <div id="loading" v-show="stories.length === 0">Loading...</div>
+
       <!-- header -->
       <div id="header">
         <a id="yc" href="http://www.ycombinator.com">
@@ -19,56 +57,53 @@
         </a>
         <h1><a href="#1">Hacker News</a></h1>
       </div>
-      <!-- main list -->
+
+      <!-- stories list -->
       <ul>
-        <li v-repeat="stories" trackby="id" class="story" v-class="current: story.id === id">
-          <span class="index">
-            {{(page - 1) * 30 + $index + 1}}.
-          </span>
-          <p>
-            <a class="title" href="{{url || ('http://news.ycombinator.com/item?id=' + id)}}" target="_blank">
-              {{title}}
-            </a>
-            <span class="domain" v-show="type != 'job'">
-              ({{url | domain}})
-            </span>
-          </p>
-          <p class="subtext">
-            <span v-show="type != 'job'">
-              {{score}} points by
-              <a v-on="click:openUser(by)">{{by}}</a>
-            </span>
-            {{time | fromNow}} ago
-            <span v-show="type != 'job'">
-              | <a v-on="click:openComments($data)">comments</a>
-            </span>
-          </p>
+        <li v-repeat="stories"
+          trackby="id"
+          v-component="story"
+          class="story"
+          v-class="current: highlighted">
         </li>
       </ul>
+
       <!-- navigation -->
       <div id="nav" v-show="stories.length > 0">
         <a v-if="page > 1" href="#{{page - 1}}">&lt; prev</a>
         <a v-if="page < 4" href="#{{page + 1}}">more...</a>
       </div>
-      <!-- user sidebar -->
-      <div class="sidebar user" v-if="user" v-transition>
+
+      <!-- comments sidebar -->
+      <div class="sidebar comments" v-if="inspectedStory" v-transition>
+        <div class="story" v-component="story" v-with="inspectedStory"></div>
+        <p v-show="!inspectedComments.length">No comments yet.</p>
         <ul>
-          <li><span class="label">user:</span> {{user.id}}</li>
-          <li><span class="label">created:</span> {{user.created | fromNow}} ago</li>
-          <li><span class="label">karma:</span> {{user.karma}}</li>
+          <li class="comment" v-repeat="inspectedComments" v-component="comment"></li>
+        </ul>
+        <a class="close" v-on="click:inspectedStory = null">&times;</a>
+      </div>
+
+      <!-- user sidebar -->
+      <div class="sidebar user" v-if="inspectedUser" v-transition>
+        <ul>
+          <li><span class="label">user:</span> {{inspectedUser.id}}</li>
+          <li><span class="label">created:</span> {{inspectedUser.created | fromNow}} ago</li>
+          <li><span class="label">karma:</span> {{inspectedUser.karma}}</li>
           <li>
             <span class="label">about:</span>
-            <div class="about" v-html="user.about"></div>
+            <div class="about" v-html="inspectedUser.about"></div>
           </li>
         </ul>
-        <a class="close" v-on="click:closeSidebar">&times;</a>
+        <p class="links">
+          <a href="https://news.ycombinator.com/submitted?id={{inspectedUser.id}}">submissions</a><br>
+          <a href="https://news.ycombinator.com/threads?id={{inspectedUser.id}}">comments</a>
+        </p>
+        <a class="close" v-on="click:inspectedUser = null">&times;</a>
       </div>
-      <!-- comments sidebar -->
-      <div class="sidebar comments" v-if="story" v-transition>
-        <ul v-repeat="story.kids">{{$value}}</ul>
-        <a class="close" v-on="click:closeSidebar">&times;</a>
-      </div>
+
     </div>
+    <script src="js/store.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>
