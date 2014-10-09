@@ -1,7 +1,6 @@
 var api = new Firebase('https://hacker-news.firebaseio.com/v0')
 var storiesPerPage = 30
 var topStories = []
-var page = getPage()
 
 /**
  * Get the page number from the current hash.
