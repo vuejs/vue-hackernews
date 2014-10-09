@@ -2,7 +2,9 @@
 
 [Live demo](http://yyx990803.github.io/vue-hackernews/)
 
-Built with [Vue.js](http://vuejs.org) and the official [HackerNews API](https://github.com/HackerNews/API), with pagination, comments, user profile, realtime updates, responsive layout, totaling ~140 SLOC JavaScript excluding comments.
+Built with [Vue.js](http://vuejs.org) and the official [HackerNews API](https://github.com/HackerNews/API), with pagination, comments, user profile, realtime updates, responsive layout.
+
+Vue.js & Firebase are the only libraries used, the app itself totals ~140 SLOC JavaScript excluding comments.
 
 ## Notes
 
