@@ -140,14 +140,6 @@ var app = new Vue({
         this.inspectedComments = comments
       }.bind(this))
       this.inspectedStory = story
-    },
-
-    /**
-     * Close all sidebars.
-     */
-
-    closeSidebar: function () {
-      this.inspectedStory = this.inspectedUser = null
     }
   }
 })
