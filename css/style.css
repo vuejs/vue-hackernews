@@ -90,6 +90,16 @@ a {
 .story .subtext a:hover {
   text-decoration: underline;
 }
+.story .poll-options {
+  padding-left: 30px;
+  list-style-type: disc;
+}
+.story .poll-options li {
+  margin: 12px 0;
+}
+.story .poll-options li p {
+  margin: 8px 0;
+}
 .story.current {
   background-color: #ededdf;
 }

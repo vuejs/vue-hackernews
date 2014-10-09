@@ -15,20 +15,26 @@
       <span class="index">{{index}}.</span>
       <p>
         <a class="title" href="{{href}}" target="_blank">{{title}}</a>
-        <span class="domain" v-show="!isJob">
+        <span class="domain" v-show="showDomain">
           ({{url | domain}})
         </span>
       </p>
       <p class="subtext">
-        <span v-show="!isJob">
+        <span v-show="showInfo">
           {{score}} points by
           <a v-on="click:$root.openUser(by)">{{by}}</a>
         </span>
         {{time | fromNow}} ago
-        <span class="comments-link" v-show="!isJob">
+        <span class="comments-link" v-show="showInfo">
           | <a v-on="click:$root.openComments($data)">comments</a>
         </span>
       </p>
+      <ul class="poll-options" v-if="pollOptions">
+        <li v-repeat="pollOptions">
+          <p>{{text}}</p>
+          <p class="subtext">{{score}} points</p>
+        </li>
+      </ul>
     </script>
 
     <!-- comment component template -->
@@ -81,7 +87,7 @@
 
       <!-- comments sidebar -->
       <div class="sidebar comments" v-if="inspectedStory" v-transition>
-        <div class="story" v-component="story" v-with="inspectedStory"></div>
+        <div class="story inspected" v-component="story" v-with="inspectedStory"></div>
         <p v-show="!inspectedComments.length">No comments yet.</p>
         <ul>
           <li class="comment" v-repeat="inspectedComments" v-component="comment"></li>
@@ -110,5 +116,6 @@
     </div>
     <script src="js/store.js"></script>
     <script src="js/app.js"></script>
+    <script src="js/router.js"></script>
   </body>
 </html>

@@ -11,11 +11,22 @@ Vue.component('story', {
     href: function () {
       return this.url || ('http://news.ycombinator.com/item?id=' + this.id)
     },
-    isJob: function () {
-      return this.type === 'job'
+    showInfo: function () {
+      return this.type === 'story' || this.type === 'poll'
+    },
+    showDomain: function () {
+      return this.type === 'story'
     },
     highlighted: function () {
       return this.$root.inspectedStory.id === this.id
+    }
+  },
+  compiled: function () {
+    // render poll options
+    if (this.type === 'poll' && this.$el.classList.contains('inspected')) {
+      store.fetchItems(this.parts, function (options) {
+        this.$add('pollOptions', options)
+      }.bind(this))
     }
   }
 })
