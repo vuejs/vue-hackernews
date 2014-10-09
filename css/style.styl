@@ -1,0 +1,115 @@
+$bg = #f6f6ef
+$gray = #828282
+
+html, body
+  font-family Verdana
+  font-size 13px
+  margin 0
+
+ul
+  list-style-type none
+  padding 0
+  margin 5px 0
+
+a
+  cursor pointer
+  text-decoration none
+
+#app
+  background-color $bg
+
+#loading
+  position absolute
+  top 50%
+  left 50%
+  width 100px
+  margin-left -50px
+  margin-top -30px
+  text-align center
+
+#header
+  background-color #f60
+  height 24px
+  h1
+    font-weight bold
+    font-size 13px
+    display inline-block
+    vertical-align middle
+    margin 0
+    a
+      color #000
+
+#yc
+  border 1px solid #fff
+  margin 2px
+  display inline-block
+  vertical-align middle
+  img
+    vertical-align middle
+
+#nav
+  padding 10px 10px 10px 40px
+  background-color #333
+  color #fff
+  a
+    color #fff
+    margin-right 10px
+
+li.story
+  padding 2px 0 2px 40px
+  position relative
+  transition background-color .2s ease
+  p
+    margin 2px 0
+  .title
+    color #000
+    &:visited
+      color $gray
+  .index
+    color $gray
+    position absolute
+    width 30px
+    text-align right
+    left 0
+    top 4px
+  .domain, .subtext
+    font-size .75em
+    color $gray
+  .subtext a:hover
+      text-decoration underline
+  &.current
+    background-color darken($bg, 5%)
+
+.sidebar
+  color $gray
+  transition all .3s ease
+  position fixed
+  right 0
+  top 0
+  height 100%
+  background-color $bg
+  box-shadow 0 0 8px rgba(0,0,0,.15)
+  overflow-y scroll
+  width 500px
+  box-sizing border-box
+  padding 10px 30px
+  .close
+    position absolute
+    top 0
+    right 0
+    padding 10px
+  &.v-enter, &.v-leave
+    -webkit-transform translate3d(100%,0,0)
+    transform translate3d(100%,0,0)
+  &.user
+    li
+      margin 5px 0
+    .label
+      display inline-block
+      min-width 60px
+    .about
+      margin-top 1em
+
+@media screen and (max-width:500px)
+  .sidebar
+    width 100%

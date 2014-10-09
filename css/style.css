@@ -1,0 +1,132 @@
+html,
+body {
+  font-family: Verdana;
+  font-size: 13px;
+  margin: 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 5px 0;
+}
+a {
+  cursor: pointer;
+  text-decoration: none;
+}
+#app {
+  background-color: #f6f6ef;
+}
+#loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  margin-left: -50px;
+  margin-top: -30px;
+  text-align: center;
+}
+#header {
+  background-color: #f60;
+  height: 24px;
+}
+#header h1 {
+  font-weight: bold;
+  font-size: 13px;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0;
+}
+#header h1 a {
+  color: #000;
+}
+#yc {
+  border: 1px solid #fff;
+  margin: 2px;
+  display: inline-block;
+  vertical-align: middle;
+}
+#yc img {
+  vertical-align: middle;
+}
+#nav {
+  padding: 10px 10px 10px 40px;
+  background-color: #333;
+  color: #fff;
+}
+#nav a {
+  color: #fff;
+  margin-right: 10px;
+}
+li.story {
+  padding: 2px 0 2px 40px;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
+li.story p {
+  margin: 2px 0;
+}
+li.story .title {
+  color: #000;
+}
+li.story .title:visited {
+  color: #828282;
+}
+li.story .index {
+  color: #828282;
+  position: absolute;
+  width: 30px;
+  text-align: right;
+  left: 0;
+  top: 4px;
+}
+li.story .domain,
+li.story .subtext {
+  font-size: 0.75em;
+  color: #828282;
+}
+li.story .subtext a:hover {
+  text-decoration: underline;
+}
+li.story.current {
+  background-color: #ededdf;
+}
+.sidebar {
+  color: #828282;
+  transition: all 0.3s ease;
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background-color: #f6f6ef;
+  box-shadow: 0 0 8px rgba(0,0,0,0.15);
+  overflow-y: scroll;
+  width: 500px;
+  box-sizing: border-box;
+  padding: 10px 30px;
+}
+.sidebar .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+}
+.sidebar.v-enter,
+.sidebar.v-leave {
+  -webkit-transform: translate3d(100%, 0, 0);
+  transform: translate3d(100%, 0, 0);
+}
+.sidebar.user li {
+  margin: 5px 0;
+}
+.sidebar.user .label {
+  display: inline-block;
+  min-width: 60px;
+}
+.sidebar.user .about {
+  margin-top: 1em;
+}
+@media screen and (max-width: 500px) {
+  .sidebar {
+    width: 100%;
+  }
+}
