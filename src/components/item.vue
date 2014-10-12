@@ -23,15 +23,6 @@
       color $gray
   .subtext a:hover
     text-decoration underline
-  .poll-options
-    padding-left 30px
-    list-style-type disc
-    li
-      margin 12px 0
-      p
-        margin 8px 0
-  &.current
-    background-color darken($bg, 5%)
 </style>
 
 <template>

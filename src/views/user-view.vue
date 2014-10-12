@@ -1,5 +1,5 @@
 <style lang="stylus">
-.view.user
+.user-view
   color $gray
   li
     margin 5px 0
@@ -13,7 +13,7 @@
 </style>
 
 <template>
-  <div class="view user" v-with="id:params.userId" v-show="user">
+  <div class="view user-view" v-with="id:params.userId" v-show="user">
     <ul>
       <li><span class="label">user:</span> {{user.id}}</li>
       <li><span class="label">created:</span> {{user.created | fromNow}} ago</li>

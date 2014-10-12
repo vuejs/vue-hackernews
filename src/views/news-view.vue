@@ -1,14 +1,12 @@
 <style lang="stylus">
-.view.news
+.news-view
   padding-left 0
   padding-right 0
-  
   &.loading:before
     content "Loading..."
     position absolute
     top 16px
     left 20px
-
   .nav
     padding 10px 10px 10px 40px
     margin-top 10px
@@ -20,7 +18,7 @@
 </style>
 
 <template>
-<div class="view news" v-with="page:params.page" v-class="loading:!items.length">
+<div class="view news-view" v-with="page:params.page" v-class="loading:!items.length">
   <!-- item list -->
   <ul>
     <li class="item" v-repeat="items" v-component="item" trackby="id"></li>
