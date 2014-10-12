@@ -1,6 +1,7 @@
 <style lang="stylus">
 .view.news
   padding-left 0
+  padding-right 0
   
   &.loading:before
     content "Loading..."
@@ -10,6 +11,7 @@
 
   .nav
     padding 10px 10px 10px 40px
+    margin-top 10px
     border-top 2px solid #f60
     a
       margin-right 10px
