@@ -1,0 +1,31 @@
+{
+  "name": "vue-hackernews",
+  "version": "1.0.0",
+  "description": "HN clone with Vue.js using HN API",
+  "main": "index.js",
+  "scripts": {
+    "dev": "watchify -v -t vueify -e src/main.js -o build/build.js",
+    "build": "browserify -t vueify src/main.js | uglifyjs -c -m > build/build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yyx990803/vue-hackernews.git"
+  },
+  "author": "Evan You",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yyx990803/vue-hackernews/issues"
+  },
+  "homepage": "https://github.com/yyx990803/vue-hackernews",
+  "devDependencies": {
+    "insert-css": "^0.2.0",
+    "stylus": "^0.49.1",
+    "vueify": "^0.1.0",
+    "watchify": "^2.0.0"
+  },
+  "dependencies": {
+    "director": "^1.2.3",
+    "firebase": "^1.1.1",
+    "vue": "git://github.com/yyx990803/vue#next"
+  }
+}
