@@ -61,9 +61,6 @@ module.exports = {
     },
     showDomain: function () {
       return this.type === 'story'
-    },
-    highlighted: function () {
-      return this.$root.inspectedStory.id === this.id
     }
   }
 }
