@@ -18,15 +18,15 @@
 </style>
 
 <template>
-<div class="view news-view" v-with="page:params.page" v-class="loading:!items.length">
+<div class="view news-view" v-class="loading:!items.length">
   <!-- item list -->
   <ul>
-    <li class="item" v-repeat="items" v-component="item" trackby="id"></li>
+    <li class="item" v-repeat="items" v-component="item" track-by="id"></li>
   </ul>
   <!-- navigation -->
   <div class="nav" v-show="items.length > 0">
-    <a v-if="page > 1" href="#/news/{{page - 1}}">&lt; prev</a>
-    <a v-if="page < 4" href="#/news/{{page + 1}}">more...</a>
+    <a v-if="params.page > 1" href="#/news/{{params.page - 1}}">&lt; prev</a>
+    <a v-if="params.page < 4" href="#/news/{{params.page + 1}}">more...</a>
   </div>
 </div>
 </template>
@@ -38,15 +38,19 @@ module.exports = {
   replace: true,
   data: function () {
     return {
-      page: 1,
+      params: {
+        page: 1
+      },
       displayPage: 1,
       items: []
     }
   },
+  watch: {
+    'params.page': 'update'
+  },
   compiled: function () {
     this.update()
     store.on('update', this.update)
-    this.$watch('page', this.update)
   },
   destroyed: function () {
     store.removeListener('update', this.update)
@@ -56,9 +60,9 @@ module.exports = {
   },
   methods: {
     update: function () {
-      store.fetchItemsByPage(this.page, function (items) {
+      store.fetchItemsByPage(this.params.page, function (items) {
         this.items = items
-        this.displayPage = this.page
+        this.displayPage = this.params.page
       }.bind(this))
     }
   }

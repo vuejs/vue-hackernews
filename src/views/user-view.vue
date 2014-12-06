@@ -13,7 +13,7 @@
 </style>
 
 <template>
-  <div class="view user-view" v-with="id:params.userId" v-show="user">
+  <div class="view user-view" v-show="user">
     <ul>
       <li><span class="label">user:</span> {{user.id}}</li>
       <li><span class="label">created:</span> {{user.created | fromNow}} ago</li>
@@ -37,13 +37,17 @@ module.exports = {
   replace: true,
   data: function () {
     return {
-      id: null,
-      user: null
+      params: {
+        userId: null
+      },
+      user: {}
     }
+  },
+  watch: {
+    'params.userId': 'update'
   },
   compiled: function () {
     this.update()
-    this.$watch('id', this.update)
   },
   methods: {
     update: function () {

@@ -69,7 +69,7 @@ a
     </span>
   </div>
   <!-- main view -->
-  <div v-component="{{view}}" v-transition></div>
+  <div v-component="{{view}}" v-with="params:params" v-transition></div>
 </template>
 
 <script>
