@@ -4,7 +4,7 @@
   "description": "HN clone with Vue.js using HN API",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --module-bind \"vue=vue\" --watch src/main.js build/build.js",
+    "dev": "webpack --module-bind \"vue=vue\" --watch --devtool source-map src/main.js build/build.js",
     "build": "webpack --module-bind \"vue=vue\" --plugin webpack/lib/optimize/UglifyJsPlugin src/main.js build/build.js"
   },
   "repository": {
