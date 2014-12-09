@@ -4,8 +4,8 @@
   "description": "HN clone with Vue.js using HN API",
   "main": "index.js",
   "scripts": {
-    "dev": "watchify -v -t vueify -e src/main.js -o build/build.js",
-    "build": "./node_modules/watchify/node_modules/.bin/browserify -t vueify src/main.js | uglifyjs -c -m > build/build.js"
+    "dev": "webpack --module-bind \"vue=vue\" --watch src/main.js build/build.js",
+    "build": "webpack --module-bind \"vue=vue\" --plugin webpack/lib/optimize/UglifyJsPlugin src/main.js build/build.js"
   },
   "repository": {
     "type": "git",
@@ -18,11 +18,9 @@
   },
   "homepage": "https://github.com/yyx990803/vue-hackernews",
   "devDependencies": {
-    "insert-css": "^0.2.0",
-    "stylus": "^0.49.1",
-    "uglify-js": "^2.4.15",
-    "vueify": "^1.1.0",
-    "watchify": "^2.1.1"
+    "stylus": "^0.49.3",
+    "vue-loader": "^1.1.0",
+    "webpack": "^1.4.13"
   },
   "dependencies": {
     "director": "^1.2.3",
