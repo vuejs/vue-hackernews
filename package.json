@@ -18,13 +18,13 @@
   },
   "homepage": "https://github.com/yyx990803/vue-hackernews",
   "devDependencies": {
-    "stylus": "^0.49.3",
-    "vue-loader": "^1.1.0",
-    "webpack": "^1.4.13"
+    "stylus": "^0.50.0",
+    "vue-loader": "^1.1.4",
+    "webpack": "^1.8.4"
   },
   "dependencies": {
-    "director": "^1.2.3",
-    "firebase": "^1.1.1",
-    "vue": "0.11.3"
+    "director": "^1.2.8",
+    "firebase": "^2.2.4",
+    "vue": "0.11.5"
   }
 }
