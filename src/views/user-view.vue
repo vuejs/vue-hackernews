@@ -51,7 +51,7 @@ module.exports = {
   },
   methods: {
     update: function () {
-      store.fetchUser(this.id, function (user) {
+      store.fetchUser(this.params.userId, function (user) {
         this.user = user
       }.bind(this))
     }
