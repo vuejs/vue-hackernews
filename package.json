@@ -25,6 +25,6 @@
   "dependencies": {
     "director": "^1.2.8",
     "firebase": "^2.2.4",
-    "vue": "yyx990803/vue#dev"
+    "vue": "^0.11.10"
   }
 }
