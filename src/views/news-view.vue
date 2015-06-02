@@ -18,17 +18,17 @@
 </style>
 
 <template>
-<div class="view news-view" v-class="loading:!items.length">
-  <!-- item list -->
-  <ul>
-    <li class="item" v-repeat="items" v-component="item" track-by="id"></li>
-  </ul>
-  <!-- navigation -->
-  <div class="nav" v-show="items.length > 0">
-    <a v-if="params.page > 1" href="#/news/{{params.page - 1}}">&lt; prev</a>
-    <a v-if="params.page < 4" href="#/news/{{params.page + 1}}">more...</a>
+  <div class="news-view" v-class="loading:!items.length">
+    <!-- item list -->
+    <ul>
+      <item v-repeat="item:items" page="{{displayPage}}" track-by="id"></item>
+    </ul>
+    <!-- navigation -->
+    <div class="nav" v-show="items.length > 0">
+      <a v-if="params.page > 1" href="#/news/{{params.page - 1}}">&lt; prev</a>
+      <a v-if="params.page < 4" href="#/news/{{params.page + 1}}">more...</a>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -36,6 +36,7 @@ var store = require('../store')
 
 module.exports = {
   replace: true,
+  props: ['params'],
   data: function () {
     return {
       params: {

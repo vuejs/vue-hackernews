@@ -19,8 +19,8 @@
 </style>
 
 <template>
-  <div class="view item-view" v-show="item">
-    <div class="item" v-component="item" v-with="item"></div>
+  <div class="item-view" v-show="item">
+    <item item="{{item}}"></item>
     <ul class="poll-options" v-if="pollOptions">
       <li v-repeat="pollOptions">
         <p>{{text}}</p>
@@ -28,7 +28,7 @@
       </li>
     </ul>
     <ul class="comments" v-if="comments">
-      <li v-repeat="comments" v-component="comment"></li>
+      <comment v-repeat="comments"></comment>
     </ul>
     <p v-show="!comments.length">No comments yet.</p>
   </div>
@@ -39,6 +39,7 @@ var store = require('../store')
 
 module.exports = {
   replace: true,
+  props: ['params'],
   data: function () {
     return {
       params: {

@@ -3,9 +3,7 @@
 html, body
   font-family Verdana
   font-size 13px
-  margin 0
   height 100%
-  background-color $bg
 
 ul
   list-style-type none
@@ -16,6 +14,12 @@ a
   color #000
   cursor pointer
   text-decoration none
+  
+#wrapper
+  background-color $bg
+  position relative
+  max-width 85%
+  margin 0 auto
 
 #header
   background-color #f60
@@ -48,8 +52,9 @@ a
 
 .view
   position absolute
+  background-color $bg
   width 100%
-  transition opacity .1s ease
+  transition opacity .2s ease
   box-sizing border-box
   padding 8px 20px
   &.v-enter, &.v-leave
@@ -57,19 +62,21 @@ a
 </style>
 
 <template>
-  <!-- header -->
-  <div id="header">
-    <a id="yc" href="http://www.ycombinator.com">
-      <img src="https://news.ycombinator.com/y18.gif">
-    </a>
-    <h1><a href="#">Hacker News</a></h1>
-    <span class="source">
-      Built with <a href="http://vuejs.org" target="_blank">Vue.js</a> |
-      <a href="https://github.com/yyx990803/vue-hackernews" target="_blank">Source</a>
-    </span>
+  <div id="wrapper">
+    <!-- header -->
+    <div id="header">
+      <a id="yc" href="http://www.ycombinator.com">
+        <img src="https://news.ycombinator.com/y18.gif">
+      </a>
+      <h1><a href="#">Hacker News</a></h1>
+      <span class="source">
+        Built with <a href="http://vuejs.org" target="_blank">Vue.js</a> |
+        <a href="https://github.com/yyx990803/vue-hackernews" target="_blank">Source</a>
+      </span>
+    </div>
+    <!-- main view -->
+    <component is="{{view}}" class="view" params="{{params}}" v-transition></component>
   </div>
-  <!-- main view -->
-  <div v-component="{{view}}" v-with="params:params" v-transition></div>
 </template>
 
 <script>

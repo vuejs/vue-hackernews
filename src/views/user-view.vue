@@ -13,7 +13,7 @@
 </style>
 
 <template>
-  <div class="view user-view" v-show="user">
+  <div class="user-view" v-show="user">
     <ul>
       <li><span class="label">user:</span> {{user.id}}</li>
       <li><span class="label">created:</span> {{user.created | fromNow}} ago</li>
@@ -35,6 +35,7 @@ var store = require('../store')
 
 module.exports = {
   replace: true,
+  props: ['params'],
   data: function () {
     return {
       params: {

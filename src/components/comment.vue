@@ -14,6 +14,8 @@
 
 .comment-content
   margin 0 0 16px 24px
+  code
+    white-space pre-wrap
 
 .child-comments
   margin 8px 0 8px 22px
@@ -28,7 +30,7 @@
     </div>
     <div class="comment-content" v-html="text" v-show="open"></div>
     <ul class="child-comments" v-if="kids" v-show="open">
-      <li v-repeat="comments" v-component="comment"></li>
+      <comment v-repeat="comments"></comment>
     </ul>
   </li>
 </template>
