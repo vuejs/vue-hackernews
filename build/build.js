@@ -56,7 +56,6 @@
 	Vue.config.warnExpressionErrors = false
 	
 	router.on('/news/:page', function (page) {
-	  window.scrollTo(0, 0)
 	  app.view = 'news-view'
 	  app.params.page = +page
 	})
@@ -9707,7 +9706,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(66)("body,html{font-family:Verdana;font-size:13px;height:100%}ul{list-style-type:none;padding:0;margin:0}a{color:#000;cursor:pointer;text-decoration:none}#wrapper{background-color:#f6f6ef;position:relative;max-width:85%;margin:0 auto}#header{background-color:#f60;height:24px;position:relative}#header h1{font-weight:700;font-size:13px;display:inline-block;vertical-align:middle;margin:0}#header .source{color:#fff;font-size:11px;position:absolute;top:4px;right:4px}#header .source a{color:#fff}#header .source a:hover{text-decoration:underline}#yc{border:1px solid #fff;margin:2px;display:inline-block;vertical-align:middle}#yc img{vertical-align:middle}.view{position:absolute;background-color:#f6f6ef;width:100%;transition:opacity .2s ease;box-sizing:border-box;padding:8px 20px}.view.v-enter,.view.v-leave{opacity:0}");
-	var __vue_template__ = "<div id=\"wrapper\">\n    <!-- header -->\n    <div id=\"header\">\n      <a id=\"yc\" href=\"http://www.ycombinator.com\">\n        <img src=\"https://news.ycombinator.com/y18.gif\">\n      </a>\n      <h1><a href=\"#\">Hacker News</a></h1>\n      <span class=\"source\">\n        Built with <a href=\"http://vuejs.org\" target=\"_blank\">Vue.js</a> |\n        <a href=\"https://github.com/yyx990803/vue-hackernews\" target=\"_blank\">Source</a>\n      </span>\n    </div>\n    <!-- main view -->\n    <component is=\"{{view}}\" class=\"view\" params=\"{{params}}\" v-transition=\"\"></component>\n  </div>";
+	var __vue_template__ = "<div id=\"wrapper\">\n    <!-- header -->\n    <div id=\"header\">\n      <a id=\"yc\" href=\"http://www.ycombinator.com\">\n        <img src=\"https://news.ycombinator.com/y18.gif\">\n      </a>\n      <h1><a href=\"#\">Hacker News</a></h1>\n      <span class=\"source\">\n        Built with <a href=\"http://vuejs.org\" target=\"_blank\">Vue.js</a> |\n        <a href=\"https://github.com/yyx990803/vue-hackernews\" target=\"_blank\">Source</a>\n      </span>\n    </div>\n    <!-- main view -->\n    <component is=\"{{view}}\" class=\"view\" params=\"{{params}}\" keep-alive=\"\" v-transition=\"\" transition-mode=\"out-in\">\n    </component>\n  </div>";
 	module.exports = {
 	  el: '#app',
 	  data: {
@@ -9769,6 +9768,7 @@
 	      store.fetchItemsByPage(this.params.page, function (items) {
 	        this.items = items
 	        this.displayPage = this.params.page
+	        window.scrollTo(0, 0)
 	      }.bind(this))
 	    }
 	  }
