@@ -65,7 +65,8 @@ a
 #wrapper
   background-color $bg
   position relative
-  max-width 85%
+  width 85%
+  min-height 80px
   margin 0 auto
 
 #header
@@ -106,4 +107,10 @@ a
   padding 8px 20px
   &.v-enter, &.v-leave
     opacity 0
+
+@media screen and (max-width: 700px)
+  html, body
+    margin 0
+  #wrapper
+    width 100%
 </style>

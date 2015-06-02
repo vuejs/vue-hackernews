@@ -54,8 +54,8 @@ module.exports = {
 
 <style lang="stylus">
 .news-view
-  padding-left 0
-  padding-right 0
+  padding-left 5px
+  padding-right 15px
   &.loading:before
     content "Loading..."
     position absolute
