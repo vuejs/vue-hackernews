@@ -1,3 +1,50 @@
+<template>
+  <div id="wrapper">
+    <!-- header -->
+    <div id="header">
+      <a id="yc" href="http://www.ycombinator.com">
+        <img src="https://news.ycombinator.com/y18.gif">
+      </a>
+      <h1><a href="#">Hacker News</a></h1>
+      <span class="source">
+        Built with <a href="http://vuejs.org" target="_blank">Vue.js</a> |
+        <a href="https://github.com/yyx990803/vue-hackernews" target="_blank">Source</a>
+      </span>
+    </div>
+    <!-- main view -->
+    <component is="{{view}}"
+      class="view"
+      params="{{params}}"
+      keep-alive
+      v-transition
+      transition-mode="out-in">
+    </component>
+  </div>
+</template>
+
+<script>
+module.exports = {
+  el: '#app',
+  data: {
+    view: '',
+    params: {
+      page: 1,
+      userId: null,
+      itemId: null
+    }
+  },
+  filters: {
+    fromNow: require('./filters/from-now'),
+    domain: require('./filters/domain')
+  },
+  components: {
+    'news-view': require('./views/news-view.vue'),
+    'item-view': require('./views/item-view.vue'),
+    'user-view': require('./views/user-view.vue')
+  }
+}
+</script>
+
 <style lang="stylus">
 @import "src/shared.styl"
 html, body
@@ -60,44 +107,3 @@ a
   &.v-enter, &.v-leave
     opacity 0
 </style>
-
-<template>
-  <div id="wrapper">
-    <!-- header -->
-    <div id="header">
-      <a id="yc" href="http://www.ycombinator.com">
-        <img src="https://news.ycombinator.com/y18.gif">
-      </a>
-      <h1><a href="#">Hacker News</a></h1>
-      <span class="source">
-        Built with <a href="http://vuejs.org" target="_blank">Vue.js</a> |
-        <a href="https://github.com/yyx990803/vue-hackernews" target="_blank">Source</a>
-      </span>
-    </div>
-    <!-- main view -->
-    <component is="{{view}}" class="view" params="{{params}}" v-transition></component>
-  </div>
-</template>
-
-<script>
-module.exports = {
-  el: '#app',
-  data: {
-    view: '',
-    params: {
-      page: 1,
-      userId: null,
-      itemId: null
-    }
-  },
-  filters: {
-    fromNow: require('./filters/from-now'),
-    domain: require('./filters/domain')
-  },
-  components: {
-    'news-view': require('./views/news-view.vue'),
-    'item-view': require('./views/item-view.vue'),
-    'user-view': require('./views/user-view.vue')
-  }
-}
-</script>

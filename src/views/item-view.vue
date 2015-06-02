@@ -1,23 +1,3 @@
-<style lang="stylus">
-@import "src/shared.styl"
-.item-view
-  .item
-    padding-left 0
-    margin-bottom 30px
-    .index, .comments-link
-      display none
-  .poll-options
-    margin-left 30px
-    margin-bottom 40px
-    li
-      margin 12px 0
-    p
-      margin 8px 0
-    .subtext
-      color $gray
-      font-size 11px
-</style>
-
 <template>
   <div class="item-view" v-show="item">
     <item item="{{item}}"></item>
@@ -83,3 +63,23 @@ module.exports = {
   }
 }
 </script>
+
+<style lang="stylus">
+@import "src/shared.styl"
+.item-view
+  .item
+    padding-left 0
+    margin-bottom 30px
+    .index, .comments-link
+      display none
+  .poll-options
+    margin-left 30px
+    margin-bottom 40px
+    li
+      margin 12px 0
+    p
+      margin 8px 0
+    .subtext
+      color $gray
+      font-size 11px
+</style>

@@ -10,7 +10,6 @@ var router = new Router()
 Vue.config.warnExpressionErrors = false
 
 router.on('/news/:page', function (page) {
-  window.scrollTo(0, 0)
   app.view = 'news-view'
   app.params.page = +page
 })

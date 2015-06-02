@@ -1,26 +1,3 @@
-<style lang="stylus">
-@import "src/shared.styl"
-
-.comhead
-  color $gray
-  font-size 11px
-  margin-bottom 8px
-  a
-    color $gray
-    &:hover
-      text-decoration underline
-  .toggle
-    margin-right 4px
-
-.comment-content
-  margin 0 0 16px 24px
-  code
-    white-space pre-wrap
-
-.child-comments
-  margin 8px 0 8px 22px
-</style>
-
 <template>
   <li v-show="text">
     <div class="comhead">
@@ -55,3 +32,26 @@ module.exports = {
   }
 }
 </script>
+
+<style lang="stylus">
+@import "src/shared.styl"
+
+.comhead
+  color $gray
+  font-size 11px
+  margin-bottom 8px
+  a
+    color $gray
+    &:hover
+      text-decoration underline
+  .toggle
+    margin-right 4px
+
+.comment-content
+  margin 0 0 16px 24px
+  code
+    white-space pre-wrap
+
+.child-comments
+  margin 8px 0 8px 22px
+</style>

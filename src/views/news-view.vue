@@ -1,22 +1,3 @@
-<style lang="stylus">
-.news-view
-  padding-left 0
-  padding-right 0
-  &.loading:before
-    content "Loading..."
-    position absolute
-    top 16px
-    left 20px
-  .nav
-    padding 10px 10px 10px 40px
-    margin-top 10px
-    border-top 2px solid #f60
-    a
-      margin-right 10px
-      &:hover
-        text-decoration underline
-</style>
-
 <template>
   <div class="news-view" v-class="loading:!items.length">
     <!-- item list -->
@@ -64,8 +45,28 @@ module.exports = {
       store.fetchItemsByPage(this.params.page, function (items) {
         this.items = items
         this.displayPage = this.params.page
+        window.scrollTo(0, 0)
       }.bind(this))
     }
   }
 }
 </script>
+
+<style lang="stylus">
+.news-view
+  padding-left 0
+  padding-right 0
+  &.loading:before
+    content "Loading..."
+    position absolute
+    top 16px
+    left 20px
+  .nav
+    padding 10px 10px 10px 40px
+    margin-top 10px
+    border-top 2px solid #f60
+    a
+      margin-right 10px
+      &:hover
+        text-decoration underline
+</style>

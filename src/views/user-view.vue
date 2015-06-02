@@ -1,17 +1,3 @@
-<style lang="stylus">
-.user-view
-  color $gray
-  li
-    margin 5px 0
-  .label
-    display inline-block
-    min-width 60px
-  .about
-    margin-top 1em
-  .links a
-    text-decoration underline
-</style>
-
 <template>
   <div class="user-view" v-show="user">
     <ul>
@@ -59,3 +45,17 @@ module.exports = {
   }
 }
 </script>
+
+<style lang="stylus">
+.user-view
+  color $gray
+  li
+    margin 5px 0
+  .label
+    display inline-block
+    min-width 60px
+  .about
+    margin-top 1em
+  .links a
+    text-decoration underline
+</style>
