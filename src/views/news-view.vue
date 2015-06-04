@@ -28,7 +28,9 @@ module.exports = {
     }
   },
   watch: {
-    'params.page': 'update'
+    'params.page': function () {
+      this.update(true)
+    }
   },
   compiled: function () {
     this.update()
@@ -41,11 +43,13 @@ module.exports = {
     item: require('../components/item.vue')
   },
   methods: {
-    update: function () {
+    update: function (switchingPage) {
       store.fetchItemsByPage(this.params.page, function (items) {
         this.items = items
         this.displayPage = this.params.page
-        window.scrollTo(0, 0)
+        if (switchingPage) {
+          window.scrollTo(0, 0)
+        }
       }.bind(this))
     }
   }
