@@ -70,7 +70,7 @@ module.exports = {
   .item
     padding-left 0
     margin-bottom 30px
-    .index, .comments-link
+    .index
       display none
   .poll-options
     margin-left 30px

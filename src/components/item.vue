@@ -14,7 +14,7 @@
       </span>
       {{item.time | fromNow}} ago
       <span class="comments-link" v-show="showInfo">
-        | <a href="#/item/{{item.id}}">comments</a>
+        | <a href="#/item/{{item.id}}">{{item.descendants}} comments</a>
       </span>
     </p>
   </div>

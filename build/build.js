@@ -10475,7 +10475,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	__webpack_require__(66)(".item{padding:2px 0 2px 40px;position:relative;transition:background-color .2s ease}.item p{margin:2px 0}.item .title:visited{color:#828282}.item .index{color:#828282;position:absolute;width:30px;text-align:right;left:0;top:4px}.item .domain,.item .subtext{font-size:11px;color:#828282}.item .domain a,.item .subtext a{color:#828282}.item .subtext a:hover{text-decoration:underline}");
-	var __vue_template__ = "<div class=\"item\">\n    <span class=\"index\">{{index}}.</span>\n    <p>\n      <a class=\"title\" href=\"{{href}}\" target=\"_blank\">{{item.title}}</a>\n      <span class=\"domain\" v-show=\"showDomain\">\n        ({{item.url | domain}})\n      </span>\n    </p>\n    <p class=\"subtext\">\n      <span v-show=\"showInfo\">\n        {{item.score}} points by\n        <a href=\"#/user/{{item.by}}\">{{item.by}}</a>\n      </span>\n      {{item.time | fromNow}} ago\n      <span class=\"comments-link\" v-show=\"showInfo\">\n        | <a href=\"#/item/{{item.id}}\">comments</a>\n      </span>\n    </p>\n  </div>";
+	var __vue_template__ = "<div class=\"item\">\n    <span class=\"index\">{{index}}.</span>\n    <p>\n      <a class=\"title\" href=\"{{href}}\" target=\"_blank\">{{item.title}}</a>\n      <span class=\"domain\" v-show=\"showDomain\">\n        ({{item.url | domain}})\n      </span>\n    </p>\n    <p class=\"subtext\">\n      <span v-show=\"showInfo\">\n        {{item.score}} points by\n        <a href=\"#/user/{{item.by}}\">{{item.by}}</a>\n      </span>\n      {{item.time | fromNow}} ago\n      <span class=\"comments-link\" v-show=\"showInfo\">\n        | <a href=\"#/item/{{item.id}}\">{{item.descendants}} comments</a>\n      </span>\n    </p>\n  </div>";
 	module.exports = {
 	  replace: true,
 	  props: ['page', 'item'],
@@ -10529,7 +10529,7 @@
 /* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(66)(".item-view .item{padding-left:0;margin-bottom:30px}.item-view .item .comments-link,.item-view .item .index{display:none}.item-view .poll-options{margin-left:30px;margin-bottom:40px}.item-view .poll-options li{margin:12px 0}.item-view .poll-options p{margin:8px 0}.item-view .poll-options .subtext{color:#828282;font-size:11px}");
+	__webpack_require__(66)(".item-view .item{padding-left:0;margin-bottom:30px}.item-view .item .index{display:none}.item-view .poll-options{margin-left:30px;margin-bottom:40px}.item-view .poll-options li{margin:12px 0}.item-view .poll-options p{margin:8px 0}.item-view .poll-options .subtext{color:#828282;font-size:11px}");
 	var __vue_template__ = "<div class=\"item-view\" v-show=\"item\">\n    <item item=\"{{item}}\"></item>\n    <ul class=\"poll-options\" v-if=\"pollOptions\">\n      <li v-repeat=\"pollOptions\">\n        <p>{{text}}</p>\n        <p class=\"subtext\">{{score}} points</p>\n      </li>\n    </ul>\n    <ul class=\"comments\" v-if=\"comments\">\n      <comment v-repeat=\"comments\"></comment>\n    </ul>\n    <p v-show=\"!comments.length\">No comments yet.</p>\n  </div>";
 	var store = __webpack_require__(67)
 	
