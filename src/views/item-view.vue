@@ -65,7 +65,7 @@ module.exports = {
 </script>
 
 <style lang="stylus">
-@import "src/shared.styl"
+@import "../shared.styl"
 .item-view
   .item
     padding-left 0

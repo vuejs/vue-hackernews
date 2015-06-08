@@ -4,8 +4,8 @@
   "description": "HN clone with Vue.js using HN API",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --module-bind \"vue=vue\" --watch --devtool source-map src/main.js build/build.js",
-    "build": "webpack --module-bind \"vue=vue\" --plugin webpack/lib/optimize/UglifyJsPlugin src/main.js build/build.js"
+    "dev": "webpack --watch",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -18,8 +18,11 @@
   },
   "homepage": "https://github.com/yyx990803/vue-hackernews",
   "devDependencies": {
-    "stylus": "^0.50.0",
-    "vue-loader": "^1.1.4",
+    "css-loader": "^0.14.4",
+    "html-loader": "^0.3.0",
+    "style-loader": "^0.12.3",
+    "stylus-loader": "^1.2.0",
+    "vue-multi-loader": "0.0.5",
     "webpack": "^1.8.4"
   },
   "dependencies": {

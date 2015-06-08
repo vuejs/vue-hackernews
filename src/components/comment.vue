@@ -34,7 +34,7 @@ module.exports = {
 </script>
 
 <style lang="stylus">
-@import "src/shared.styl"
+@import "../shared.styl"
 
 .comhead
   color $gray

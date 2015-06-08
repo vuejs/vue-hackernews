@@ -46,7 +46,7 @@ module.exports = {
 </script>
 
 <style lang="stylus">
-@import "src/shared.styl"
+@import "./shared.styl"
 html, body
   font-family Verdana
   font-size 13px

@@ -44,7 +44,7 @@ module.exports = {
 </script>
 
 <style lang="stylus">
-@import "src/shared.styl"
+@import "../shared.styl"
 
 .item
   padding 2px 0 2px 40px

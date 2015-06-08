@@ -49,8 +49,8 @@
 	 */
 	
 	var Vue = __webpack_require__(1)
-	var Router = __webpack_require__(63).Router
-	var app = new Vue(__webpack_require__(64))
+	var Router = __webpack_require__(69).Router
+	var app = new Vue(__webpack_require__(70))
 	var router = new Router()
 	
 	Vue.config.warnExpressionErrors = false
@@ -122,7 +122,7 @@
 	
 	Vue.options = {
 	  directives  : __webpack_require__(29),
-	  filters     : __webpack_require__(52),
+	  filters     : __webpack_require__(58),
 	  transitions : {},
 	  components  : {},
 	  elementDirectives: {}
@@ -154,21 +154,21 @@
 	 * Mixin internal instance methods
 	 */
 	
-	extend(p, __webpack_require__(54))
-	extend(p, __webpack_require__(55))
-	extend(p, __webpack_require__(56))
+	extend(p, __webpack_require__(60))
+	extend(p, __webpack_require__(61))
+	extend(p, __webpack_require__(62))
 	extend(p, __webpack_require__(2))
-	extend(p, __webpack_require__(57))
+	extend(p, __webpack_require__(63))
 	
 	/**
 	 * Mixin public API methods
 	 */
 	
-	extend(p, __webpack_require__(58))
-	extend(p, __webpack_require__(59))
-	extend(p, __webpack_require__(60))
-	extend(p, __webpack_require__(61))
-	extend(p, __webpack_require__(62))
+	extend(p, __webpack_require__(64))
+	extend(p, __webpack_require__(65))
+	extend(p, __webpack_require__(66))
+	extend(p, __webpack_require__(67))
+	extend(p, __webpack_require__(68))
 	
 	module.exports = _.Vue = Vue
 
@@ -5301,20 +5301,20 @@
 	exports['class']   = __webpack_require__(35)
 	exports.el         = __webpack_require__(36)
 	exports.ref        = __webpack_require__(37)
-	exports.cloak      = __webpack_require__(38)
-	exports.style      = __webpack_require__(39)
-	exports.transition = __webpack_require__(40)
+	exports.cloak      = __webpack_require__(44)
+	exports.style      = __webpack_require__(45)
+	exports.transition = __webpack_require__(46)
 	
 	// event listener directives
-	exports.on         = __webpack_require__(43)
-	exports.model      = __webpack_require__(44)
+	exports.on         = __webpack_require__(49)
+	exports.model      = __webpack_require__(50)
 	
 	// logic control directives
-	exports.repeat     = __webpack_require__(49)
-	exports['if']      = __webpack_require__(50)
+	exports.repeat     = __webpack_require__(55)
+	exports['if']      = __webpack_require__(56)
 	
 	// child vm communication directives
-	exports.events     = __webpack_require__(51)
+	exports.events     = __webpack_require__(57)
 	
 	// internal directives that should not be used directly
 	// but we still want to expose them for advanced usage.
@@ -5640,7 +5640,13 @@
 	}
 
 /***/ },
-/* 38 */
+/* 38 */,
+/* 39 */,
+/* 40 */,
+/* 41 */,
+/* 42 */,
+/* 43 */,
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var config = __webpack_require__(5)
@@ -5657,7 +5663,7 @@
 	}
 
 /***/ },
-/* 39 */
+/* 45 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -5762,11 +5768,11 @@
 	}
 
 /***/ },
-/* 40 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
-	var Transition = __webpack_require__(41)
+	var Transition = __webpack_require__(47)
 	
 	module.exports = {
 	
@@ -5794,11 +5800,11 @@
 	}
 
 /***/ },
-/* 41 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
-	var queue = __webpack_require__(42)
+	var queue = __webpack_require__(48)
 	var addClass = _.addClass
 	var removeClass = _.removeClass
 	var transitionEndEvent = _.transitionEndEvent
@@ -6100,7 +6106,7 @@
 	module.exports = Transition
 
 /***/ },
-/* 42 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -6140,7 +6146,7 @@
 	}
 
 /***/ },
-/* 43 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -6204,16 +6210,16 @@
 	}
 
 /***/ },
-/* 44 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
 	
 	var handlers = {
-	  text: __webpack_require__(45),
-	  radio: __webpack_require__(46),
-	  select: __webpack_require__(47),
-	  checkbox: __webpack_require__(48)
+	  text: __webpack_require__(51),
+	  radio: __webpack_require__(52),
+	  select: __webpack_require__(53),
+	  checkbox: __webpack_require__(54)
 	}
 	
 	module.exports = {
@@ -6283,7 +6289,7 @@
 	}
 
 /***/ },
-/* 45 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -6447,7 +6453,7 @@
 	}
 
 /***/ },
-/* 46 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -6478,7 +6484,7 @@
 	}
 
 /***/ },
-/* 47 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -6669,7 +6675,7 @@
 	}
 
 /***/ },
-/* 48 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -6699,7 +6705,7 @@
 	}
 
 /***/ },
-/* 49 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -7316,7 +7322,7 @@
 	}
 
 /***/ },
-/* 50 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -7445,7 +7451,7 @@
 	}
 
 /***/ },
-/* 51 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -7486,7 +7492,7 @@
 	}
 
 /***/ },
-/* 52 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -7624,11 +7630,11 @@
 	 * Install special array filters
 	 */
 	
-	_.extend(exports, __webpack_require__(53))
+	_.extend(exports, __webpack_require__(59))
 
 
 /***/ },
-/* 53 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -7718,7 +7724,7 @@
 	}
 
 /***/ },
-/* 54 */
+/* 60 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var mergeOptions = __webpack_require__(3).mergeOptions
@@ -7815,7 +7821,7 @@
 	}
 
 /***/ },
-/* 55 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -7958,7 +7964,7 @@
 	}
 
 /***/ },
-/* 56 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -8197,7 +8203,7 @@
 	}
 
 /***/ },
-/* 57 */
+/* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -8282,7 +8288,7 @@
 	}
 
 /***/ },
-/* 58 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var Watcher = __webpack_require__(12)
@@ -8437,7 +8443,7 @@
 	}
 
 /***/ },
-/* 59 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -8665,7 +8671,7 @@
 	}
 
 /***/ },
-/* 60 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -8844,7 +8850,7 @@
 	}
 
 /***/ },
-/* 61 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -8895,7 +8901,7 @@
 	}
 
 /***/ },
-/* 62 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(3)
@@ -8972,7 +8978,7 @@
 	}
 
 /***/ },
-/* 63 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	
@@ -9702,11 +9708,276 @@
 	}(true ? exports : window));
 
 /***/ },
-/* 64 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(66)("body,html{font-family:Verdana;font-size:13px;height:100%}ul{list-style-type:none;padding:0;margin:0}a{color:#000;cursor:pointer;text-decoration:none}#wrapper{background-color:#f6f6ef;position:relative;width:85%;min-height:80px;margin:0 auto}#header{background-color:#f60;height:24px;position:relative}#header h1{font-weight:700;font-size:13px;display:inline-block;vertical-align:middle;margin:0}#header .source{color:#fff;font-size:11px;position:absolute;top:4px;right:4px}#header .source a{color:#fff}#header .source a:hover{text-decoration:underline}#yc{border:1px solid #fff;margin:2px;display:inline-block;vertical-align:middle}#yc img{vertical-align:middle}.view{position:absolute;background-color:#f6f6ef;width:100%;transition:opacity .2s ease;box-sizing:border-box;padding:8px 20px}.view.v-enter,.view.v-leave{opacity:0}@media screen and (max-width:700px){body,html{margin:0}#wrapper{width:100%}}");
-	var __vue_template__ = "<div id=\"wrapper\">\n    <!-- header -->\n    <div id=\"header\">\n      <a id=\"yc\" href=\"http://www.ycombinator.com\">\n        <img src=\"https://news.ycombinator.com/y18.gif\">\n      </a>\n      <h1><a href=\"#\">Hacker News</a></h1>\n      <span class=\"source\">\n        Built with <a href=\"http://vuejs.org\" target=\"_blank\">Vue.js</a> |\n        <a href=\"https://github.com/yyx990803/vue-hackernews\" target=\"_blank\">Source</a>\n      </span>\n    </div>\n    <!-- main view -->\n    <component is=\"{{view}}\" class=\"view\" params=\"{{params}}\" keep-alive=\"\" v-transition=\"\" transition-mode=\"out-in\">\n    </component>\n  </div>";
+	__webpack_require__(71)
+	module.exports = __webpack_require__(74)
+	module.exports.template = __webpack_require__(106)
+
+/***/ },
+/* 71 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(72);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(73)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/stylus-loader/index.js!./../node_modules/vue-multi-loader/selector.js?style/stylus!./app.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/stylus-loader/index.js!./../node_modules/vue-multi-loader/selector.js?style/stylus!./app.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 72 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(80)();
+	exports.push([module.id, "html,\nbody {\n  font-family: Verdana;\n  font-size: 13px;\n  height: 100%;\n}\nul {\n  list-style-type: none;\n  padding: 0;\n  margin: 0;\n}\na {\n  color: #000;\n  cursor: pointer;\n  text-decoration: none;\n}\n#wrapper {\n  background-color: #f6f6ef;\n  position: relative;\n  width: 85%;\n  min-height: 80px;\n  margin: 0 auto;\n}\n#header {\n  background-color: #f60;\n  height: 24px;\n  position: relative;\n}\n#header h1 {\n  font-weight: bold;\n  font-size: 13px;\n  display: inline-block;\n  vertical-align: middle;\n  margin: 0;\n}\n#header .source {\n  color: #fff;\n  font-size: 11px;\n  position: absolute;\n  top: 4px;\n  right: 4px;\n}\n#header .source a {\n  color: #fff;\n}\n#header .source a:hover {\n  text-decoration: underline;\n}\n#yc {\n  border: 1px solid #fff;\n  margin: 2px;\n  display: inline-block;\n  vertical-align: middle;\n}\n#yc img {\n  vertical-align: middle;\n}\n.view {\n  position: absolute;\n  background-color: #f6f6ef;\n  width: 100%;\n  transition: opacity 0.2s ease;\n  box-sizing: border-box;\n  padding: 8px 20px;\n}\n.view.v-enter,\n.view.v-leave {\n  opacity: 0;\n}\n@media screen and (max-width: 700px) {\n  html,\n  body {\n    margin: 0;\n  }\n  #wrapper {\n    width: 100%;\n  }\n}\n", ""]);
+
+/***/ },
+/* 73 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	var stylesInDom = {},
+		memoize = function(fn) {
+			var memo;
+			return function () {
+				if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+				return memo;
+			};
+		},
+		isOldIE = memoize(function() {
+			return /msie [6-9]\b/.test(window.navigator.userAgent.toLowerCase());
+		}),
+		getHeadElement = memoize(function () {
+			return document.head || document.getElementsByTagName("head")[0];
+		}),
+		singletonElement = null,
+		singletonCounter = 0;
+	
+	module.exports = function(list, options) {
+		if(false) {
+			if(typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+		}
+	
+		options = options || {};
+		// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+		// tags it will allow on a page
+		if (typeof options.singleton === "undefined") options.singleton = isOldIE();
+	
+		var styles = listToStyles(list);
+		addStylesToDom(styles, options);
+	
+		return function update(newList) {
+			var mayRemove = [];
+			for(var i = 0; i < styles.length; i++) {
+				var item = styles[i];
+				var domStyle = stylesInDom[item.id];
+				domStyle.refs--;
+				mayRemove.push(domStyle);
+			}
+			if(newList) {
+				var newStyles = listToStyles(newList);
+				addStylesToDom(newStyles, options);
+			}
+			for(var i = 0; i < mayRemove.length; i++) {
+				var domStyle = mayRemove[i];
+				if(domStyle.refs === 0) {
+					for(var j = 0; j < domStyle.parts.length; j++)
+						domStyle.parts[j]();
+					delete stylesInDom[domStyle.id];
+				}
+			}
+		};
+	}
+	
+	function addStylesToDom(styles, options) {
+		for(var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+			if(domStyle) {
+				domStyle.refs++;
+				for(var j = 0; j < domStyle.parts.length; j++) {
+					domStyle.parts[j](item.parts[j]);
+				}
+				for(; j < item.parts.length; j++) {
+					domStyle.parts.push(addStyle(item.parts[j], options));
+				}
+			} else {
+				var parts = [];
+				for(var j = 0; j < item.parts.length; j++) {
+					parts.push(addStyle(item.parts[j], options));
+				}
+				stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+			}
+		}
+	}
+	
+	function listToStyles(list) {
+		var styles = [];
+		var newStyles = {};
+		for(var i = 0; i < list.length; i++) {
+			var item = list[i];
+			var id = item[0];
+			var css = item[1];
+			var media = item[2];
+			var sourceMap = item[3];
+			var part = {css: css, media: media, sourceMap: sourceMap};
+			if(!newStyles[id])
+				styles.push(newStyles[id] = {id: id, parts: [part]});
+			else
+				newStyles[id].parts.push(part);
+		}
+		return styles;
+	}
+	
+	function createStyleElement() {
+		var styleElement = document.createElement("style");
+		var head = getHeadElement();
+		styleElement.type = "text/css";
+		head.appendChild(styleElement);
+		return styleElement;
+	}
+	
+	function createLinkElement() {
+		var linkElement = document.createElement("link");
+		var head = getHeadElement();
+		linkElement.rel = "stylesheet";
+		head.appendChild(linkElement);
+		return linkElement;
+	}
+	
+	function addStyle(obj, options) {
+		var styleElement, update, remove;
+	
+		if (options.singleton) {
+			var styleIndex = singletonCounter++;
+			styleElement = singletonElement || (singletonElement = createStyleElement());
+			update = applyToSingletonTag.bind(null, styleElement, styleIndex, false);
+			remove = applyToSingletonTag.bind(null, styleElement, styleIndex, true);
+		} else if(obj.sourceMap &&
+			typeof URL === "function" &&
+			typeof URL.createObjectURL === "function" &&
+			typeof URL.revokeObjectURL === "function" &&
+			typeof Blob === "function" &&
+			typeof btoa === "function") {
+			styleElement = createLinkElement();
+			update = updateLink.bind(null, styleElement);
+			remove = function() {
+				styleElement.parentNode.removeChild(styleElement);
+				if(styleElement.href)
+					URL.revokeObjectURL(styleElement.href);
+			};
+		} else {
+			styleElement = createStyleElement();
+			update = applyToTag.bind(null, styleElement);
+			remove = function() {
+				styleElement.parentNode.removeChild(styleElement);
+			};
+		}
+	
+		update(obj);
+	
+		return function updateStyle(newObj) {
+			if(newObj) {
+				if(newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap)
+					return;
+				update(obj = newObj);
+			} else {
+				remove();
+			}
+		};
+	}
+	
+	var replaceText = (function () {
+		var textStore = [];
+	
+		return function (index, replacement) {
+			textStore[index] = replacement;
+			return textStore.filter(Boolean).join('\n');
+		};
+	})();
+	
+	function applyToSingletonTag(styleElement, index, remove, obj) {
+		var css = remove ? "" : obj.css;
+	
+		if (styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = replaceText(index, css);
+		} else {
+			var cssNode = document.createTextNode(css);
+			var childNodes = styleElement.childNodes;
+			if (childNodes[index]) styleElement.removeChild(childNodes[index]);
+			if (childNodes.length) {
+				styleElement.insertBefore(cssNode, childNodes[index]);
+			} else {
+				styleElement.appendChild(cssNode);
+			}
+		}
+	}
+	
+	function applyToTag(styleElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+		var sourceMap = obj.sourceMap;
+	
+		if(media) {
+			styleElement.setAttribute("media", media)
+		}
+	
+		if(styleElement.styleSheet) {
+			styleElement.styleSheet.cssText = css;
+		} else {
+			while(styleElement.firstChild) {
+				styleElement.removeChild(styleElement.firstChild);
+			}
+			styleElement.appendChild(document.createTextNode(css));
+		}
+	}
+	
+	function updateLink(linkElement, obj) {
+		var css = obj.css;
+		var media = obj.media;
+		var sourceMap = obj.sourceMap;
+	
+		if(sourceMap) {
+			// http://stackoverflow.com/a/26603875
+			css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+		}
+	
+		var blob = new Blob([css], { type: "text/css" });
+	
+		var oldSrc = linkElement.href;
+	
+		linkElement.href = URL.createObjectURL(blob);
+	
+		if(oldSrc)
+			URL.revokeObjectURL(oldSrc);
+	}
+
+
+/***/ },
+/* 74 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
 	module.exports = {
 	  el: '#app',
 	  data: {
@@ -9718,25 +9989,147 @@
 	    }
 	  },
 	  filters: {
-	    fromNow: __webpack_require__(71),
-	    domain: __webpack_require__(72)
+	    fromNow: __webpack_require__(75),
+	    domain: __webpack_require__(76)
 	  },
 	  components: {
-	    'news-view': __webpack_require__(65),
-	    'item-view': __webpack_require__(73),
-	    'user-view': __webpack_require__(75)
+	    'news-view': __webpack_require__(77),
+	    'item-view': __webpack_require__(91),
+	    'user-view': __webpack_require__(101)
 	  }
 	}
-	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
+	
 
 
 /***/ },
-/* 65 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(66)(".news-view{padding-left:5px;padding-right:15px}.news-view.loading:before{content:\"Loading...\";position:absolute;top:16px;left:20px}.news-view .nav{padding:10px 10px 10px 40px;margin-top:10px;border-top:2px solid #f60}.news-view .nav a{margin-right:10px}.news-view .nav a:hover{text-decoration:underline}");
-	var __vue_template__ = "<div class=\"news-view\" v-class=\"loading:!items.length\">\n    <!-- item list -->\n    <ul>\n      <item v-repeat=\"item:items\" page=\"{{displayPage}}\" track-by=\"id\"></item>\n    </ul>\n    <!-- navigation -->\n    <div class=\"nav\" v-show=\"items.length > 0\">\n      <a v-if=\"params.page > 1\" href=\"#/news/{{params.page - 1}}\">&lt; prev</a>\n      <a v-if=\"params.page < 4\" href=\"#/news/{{params.page + 1}}\">more...</a>\n    </div>\n  </div>";
-	var store = __webpack_require__(67)
+	module.exports = function (time) {
+	  var between = Date.now() / 1000 - Number(time)
+	  if (between < 3600) {
+	    return ~~(between / 60) + ' minutes'
+	  } else if (between < 86400) {
+	    return ~~(between / 3600) + ' hours'
+	  } else {
+	    return ~~(between / 86400) + ' days'
+	  }
+	}
+
+/***/ },
+/* 76 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var parser = document.createElement('a')
+	
+	module.exports = function (url) {
+	  parser.href = url
+	  return parser.hostname
+	}
+
+/***/ },
+/* 77 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(78)
+	module.exports = __webpack_require__(81)
+	module.exports.template = __webpack_require__(90)
+
+/***/ },
+/* 78 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(79);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(73)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-multi-loader/selector.js?style/stylus!./news-view.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-multi-loader/selector.js?style/stylus!./news-view.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 79 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(80)();
+	exports.push([module.id, ".news-view {\n  padding-left: 5px;\n  padding-right: 15px;\n}\n.news-view.loading:before {\n  content: \"Loading...\";\n  position: absolute;\n  top: 16px;\n  left: 20px;\n}\n.news-view .nav {\n  padding: 10px 10px 10px 40px;\n  margin-top: 10px;\n  border-top: 2px solid #f60;\n}\n.news-view .nav a {\n  margin-right: 10px;\n}\n.news-view .nav a:hover {\n  text-decoration: underline;\n}\n", ""]);
+
+/***/ },
+/* 80 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+		MIT License http://www.opensource.org/licenses/mit-license.php
+		Author Tobias Koppers @sokra
+	*/
+	// css base code, injected by the css-loader
+	module.exports = function() {
+		var list = [];
+	
+		// return the list of modules as css string
+		list.toString = function toString() {
+			var result = [];
+			for(var i = 0; i < this.length; i++) {
+				var item = this[i];
+				if(item[2]) {
+					result.push("@media " + item[2] + "{" + item[1] + "}");
+				} else {
+					result.push(item[1]);
+				}
+			}
+			return result.join("");
+		};
+	
+		// import a list of modules into the list
+		list.i = function(modules, mediaQuery) {
+			if(typeof modules === "string")
+				modules = [[null, modules, ""]];
+			var alreadyImportedModules = {};
+			for(var i = 0; i < this.length; i++) {
+				var id = this[i][0];
+				if(typeof id === "number")
+					alreadyImportedModules[id] = true;
+			}
+			for(i = 0; i < modules.length; i++) {
+				var item = modules[i];
+				// skip already imported module
+				// this implementation is not 100% perfect for weird media query combinations
+				//  when a module is imported multiple times with different media queries.
+				//  I hope this will never occur (Hey this way we have smaller bundles)
+				if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+					if(mediaQuery && !item[2]) {
+						item[2] = mediaQuery;
+					} else if(mediaQuery) {
+						item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+					}
+					list.push(item);
+				}
+			}
+		};
+		return list;
+	};
+
+
+/***/ },
+/* 81 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var store = __webpack_require__(82)
 	
 	module.exports = {
 	  replace: true,
@@ -9763,7 +10156,7 @@
 	    store.removeListener('update', this.update)
 	  },
 	  components: {
-	    item: __webpack_require__(70)
+	    item: __webpack_require__(85)
 	  },
 	  methods: {
 	    update: function (switchingPage) {
@@ -9777,47 +10170,19 @@
 	    }
 	  }
 	}
-	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
+	
 
 
 /***/ },
-/* 66 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var inserted = {};
-	
-	module.exports = function (css, options) {
-	    if (inserted[css]) return;
-	    inserted[css] = true;
-	    
-	    var elem = document.createElement('style');
-	    elem.setAttribute('type', 'text/css');
-	
-	    if ('textContent' in elem) {
-	      elem.textContent = css;
-	    } else {
-	      elem.styleSheet.cssText = css;
-	    }
-	    
-	    var head = document.getElementsByTagName('head')[0];
-	    if (options && options.prepend) {
-	        head.insertBefore(elem, head.childNodes[0]);
-	    } else {
-	        head.appendChild(elem);
-	    }
-	};
-
-
-/***/ },
-/* 67 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Firebase = __webpack_require__(68)
+	var Firebase = __webpack_require__(83)
 	var api = new Firebase('https://hacker-news.firebaseio.com/v0')
 	var storiesPerPage = 30
 	var cachedStoryIds = []
 	var cachedStories = {}
-	var Emitter = __webpack_require__(69).EventEmitter
+	var Emitter = __webpack_require__(84).EventEmitter
 	var store = module.exports = new Emitter()
 	
 	/**
@@ -9898,7 +10263,7 @@
 	}
 
 /***/ },
-/* 68 */
+/* 83 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*! @license Firebase v2.2.6
@@ -10168,7 +10533,7 @@
 
 
 /***/ },
-/* 69 */
+/* 84 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// Copyright Joyent, Inc. and other Node contributors.
@@ -10475,11 +10840,51 @@
 
 
 /***/ },
-/* 70 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(66)(".item{padding:2px 0 2px 40px;position:relative;transition:background-color .2s ease}.item p{margin:2px 0}.item .title:visited{color:#828282}.item .index{color:#828282;position:absolute;width:30px;text-align:right;left:0;top:4px}.item .domain,.item .subtext{font-size:11px;color:#828282}.item .domain a,.item .subtext a{color:#828282}.item .subtext a:hover{text-decoration:underline}");
-	var __vue_template__ = "<div class=\"item\">\n    <span class=\"index\">{{index}}.</span>\n    <p>\n      <a class=\"title\" href=\"{{href}}\" target=\"_blank\">{{item.title}}</a>\n      <span class=\"domain\" v-show=\"showDomain\">\n        ({{item.url | domain}})\n      </span>\n    </p>\n    <p class=\"subtext\">\n      <span v-show=\"showInfo\">\n        {{item.score}} points by\n        <a href=\"#/user/{{item.by}}\">{{item.by}}</a>\n      </span>\n      {{item.time | fromNow}} ago\n      <span class=\"comments-link\" v-show=\"showInfo\">\n        | <a href=\"#/item/{{item.id}}\">{{item.descendants}} comments</a>\n      </span>\n    </p>\n  </div>";
+	__webpack_require__(86)
+	module.exports = __webpack_require__(88)
+	module.exports.template = __webpack_require__(89)
+
+/***/ },
+/* 86 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(87);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(73)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-multi-loader/selector.js?style/stylus!./item.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-multi-loader/selector.js?style/stylus!./item.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 87 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(80)();
+	exports.push([module.id, ".item {\n  padding: 2px 0 2px 40px;\n  position: relative;\n  transition: background-color 0.2s ease;\n}\n.item p {\n  margin: 2px 0;\n}\n.item .title:visited {\n  color: #828282;\n}\n.item .index {\n  color: #828282;\n  position: absolute;\n  width: 30px;\n  text-align: right;\n  left: 0;\n  top: 4px;\n}\n.item .domain,\n.item .subtext {\n  font-size: 11px;\n  color: #828282;\n}\n.item .domain a,\n.item .subtext a {\n  color: #828282;\n}\n.item .subtext a:hover {\n  text-decoration: underline;\n}\n", ""]);
+
+/***/ },
+/* 88 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
 	module.exports = {
 	  replace: true,
 	  props: ['page', 'item'],
@@ -10500,42 +10905,68 @@
 	    }
 	  }
 	}
-	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
-
-
-/***/ },
-/* 71 */
-/***/ function(module, exports, __webpack_require__) {
-
-	module.exports = function (time) {
-	  var between = Date.now() / 1000 - Number(time)
-	  if (between < 3600) {
-	    return ~~(between / 60) + ' minutes'
-	  } else if (between < 86400) {
-	    return ~~(between / 3600) + ' hours'
-	  } else {
-	    return ~~(between / 86400) + ' days'
-	  }
-	}
-
-/***/ },
-/* 72 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var parser = document.createElement('a')
 	
-	module.exports = function (url) {
-	  parser.href = url
-	  return parser.hostname
+
+
+/***/ },
+/* 89 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "\n  <div class=\"item\">\n    <span class=\"index\">{{index}}.</span>\n    <p>\n      <a class=\"title\" href=\"{{href}}\" target=\"_blank\">{{item.title}}</a>\n      <span class=\"domain\" v-show=\"showDomain\">\n        ({{item.url | domain}})\n      </span>\n    </p>\n    <p class=\"subtext\">\n      <span v-show=\"showInfo\">\n        {{item.score}} points by\n        <a href=\"#/user/{{item.by}}\">{{item.by}}</a>\n      </span>\n      {{item.time | fromNow}} ago\n      <span class=\"comments-link\" v-show=\"showInfo\">\n        | <a href=\"#/item/{{item.id}}\">{{item.descendants}} comments</a>\n      </span>\n    </p>\n  </div>\n\n";
+
+/***/ },
+/* 90 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "\n  <div class=\"news-view\" v-class=\"loading:!items.length\">\n    <!-- item list -->\n    <ul>\n      <item v-repeat=\"item:items\" page=\"{{displayPage}}\" track-by=\"id\"></item>\n    </ul>\n    <!-- navigation -->\n    <div class=\"nav\" v-show=\"items.length > 0\">\n      <a v-if=\"params.page > 1\" href=\"#/news/{{params.page - 1}}\">&lt; prev</a>\n      <a v-if=\"params.page < 4\" href=\"#/news/{{params.page + 1}}\">more...</a>\n    </div>\n  </div>\n\n";
+
+/***/ },
+/* 91 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(92)
+	module.exports = __webpack_require__(94)
+	module.exports.template = __webpack_require__(100)
+
+/***/ },
+/* 92 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(93);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(73)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-multi-loader/selector.js?style/stylus!./item-view.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-multi-loader/selector.js?style/stylus!./item-view.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
 	}
 
 /***/ },
-/* 73 */
+/* 93 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(66)(".item-view .item{padding-left:0;margin-bottom:30px}.item-view .item .index{display:none}.item-view .poll-options{margin-left:30px;margin-bottom:40px}.item-view .poll-options li{margin:12px 0}.item-view .poll-options p{margin:8px 0}.item-view .poll-options .subtext{color:#828282;font-size:11px}");
-	var __vue_template__ = "<div class=\"item-view\" v-show=\"item\">\n    <item item=\"{{item}}\"></item>\n    <ul class=\"poll-options\" v-if=\"pollOptions\">\n      <li v-repeat=\"pollOptions\">\n        <p>{{text}}</p>\n        <p class=\"subtext\">{{score}} points</p>\n      </li>\n    </ul>\n    <ul class=\"comments\" v-if=\"comments\">\n      <comment v-repeat=\"comments\"></comment>\n    </ul>\n    <p v-show=\"!comments.length\">No comments yet.</p>\n  </div>";
-	var store = __webpack_require__(67)
+	exports = module.exports = __webpack_require__(80)();
+	exports.push([module.id, ".item-view .item {\n  padding-left: 0;\n  margin-bottom: 30px;\n}\n.item-view .item .index {\n  display: none;\n}\n.item-view .poll-options {\n  margin-left: 30px;\n  margin-bottom: 40px;\n}\n.item-view .poll-options li {\n  margin: 12px 0;\n}\n.item-view .poll-options p {\n  margin: 8px 0;\n}\n.item-view .poll-options .subtext {\n  color: #828282;\n  font-size: 11px;\n}\n", ""]);
+
+/***/ },
+/* 94 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var store = __webpack_require__(82)
 	
 	module.exports = {
 	  replace: true,
@@ -10578,20 +11009,60 @@
 	    }
 	  },
 	  components: {
-	    item: __webpack_require__(70),
-	    comment: __webpack_require__(74)
+	    item: __webpack_require__(85),
+	    comment: __webpack_require__(95)
 	  }
 	}
-	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
+	
 
 
 /***/ },
-/* 74 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(66)(".comhead{color:#828282;font-size:11px;margin-bottom:8px}.comhead a{color:#828282}.comhead a:hover{text-decoration:underline}.comhead .toggle{margin-right:4px}.comment-content{margin:0 0 16px 24px}.comment-content code{white-space:pre-wrap}.child-comments{margin:8px 0 8px 22px}");
-	var __vue_template__ = "<li v-show=\"text\">\n    <div class=\"comhead\">\n      <a class=\"toggle\" v-on=\"click:open = !open\">{{open ? '[-]' : '[+]'}}</a>\n      <a href=\"#/user/{{by}}\">{{by}}</a>\n      {{time | fromNow}} ago\n    </div>\n    <div class=\"comment-content\" v-html=\"text\" v-show=\"open\"></div>\n    <ul class=\"child-comments\" v-if=\"kids\" v-show=\"open\">\n      <comment v-repeat=\"comments\"></comment>\n    </ul>\n  </li>";
-	var store = __webpack_require__(67)
+	__webpack_require__(96)
+	module.exports = __webpack_require__(98)
+	module.exports.template = __webpack_require__(99)
+
+/***/ },
+/* 96 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(97);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(73)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-multi-loader/selector.js?style/stylus!./comment.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-multi-loader/selector.js?style/stylus!./comment.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 97 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(80)();
+	exports.push([module.id, ".comhead {\n  color: #828282;\n  font-size: 11px;\n  margin-bottom: 8px;\n}\n.comhead a {\n  color: #828282;\n}\n.comhead a:hover {\n  text-decoration: underline;\n}\n.comhead .toggle {\n  margin-right: 4px;\n}\n.comment-content {\n  margin: 0 0 16px 24px;\n}\n.comment-content code {\n  white-space: pre-wrap;\n}\n.child-comments {\n  margin: 8px 0 8px 22px;\n}\n", ""]);
+
+/***/ },
+/* 98 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var store = __webpack_require__(82)
 	
 	module.exports = {
 	  replace: true,
@@ -10609,16 +11080,68 @@
 	    }
 	  }
 	}
-	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
+	
 
 
 /***/ },
-/* 75 */
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
-	__webpack_require__(66)(".user-view{color:$gray}.user-view li{margin:5px 0}.user-view .label{display:inline-block;min-width:60px}.user-view .about{margin-top:1em}.user-view .links a{text-decoration:underline}");
-	var __vue_template__ = "<div class=\"user-view\" v-show=\"user\">\n    <ul>\n      <li><span class=\"label\">user:</span> {{user.id}}</li>\n      <li><span class=\"label\">created:</span> {{user.created | fromNow}} ago</li>\n      <li><span class=\"label\">karma:</span> {{user.karma}}</li>\n      <li>\n        <span class=\"label\">about:</span>\n        <div class=\"about\" v-html=\"user.about\"></div>\n      </li>\n    </ul>\n    <p class=\"links\">\n      <a href=\"https://news.ycombinator.com/submitted?id={{user.id}}\">submissions</a><br>\n      <a href=\"https://news.ycombinator.com/threads?id={{user.id}}\">comments</a>\n    </p>\n  </div>";
-	var store = __webpack_require__(67)
+	module.exports = "\n  <li v-show=\"text\">\n    <div class=\"comhead\">\n      <a class=\"toggle\" v-on=\"click:open = !open\">{{open ? '[-]' : '[+]'}}</a>\n      <a href=\"#/user/{{by}}\">{{by}}</a>\n      {{time | fromNow}} ago\n    </div>\n    <div class=\"comment-content\" v-html=\"text\" v-show=\"open\"></div>\n    <ul class=\"child-comments\" v-if=\"kids\" v-show=\"open\">\n      <comment v-repeat=\"comments\"></comment>\n    </ul>\n  </li>\n\n";
+
+/***/ },
+/* 100 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "\n  <div class=\"item-view\" v-show=\"item\">\n    <item item=\"{{item}}\"></item>\n    <ul class=\"poll-options\" v-if=\"pollOptions\">\n      <li v-repeat=\"pollOptions\">\n        <p>{{text}}</p>\n        <p class=\"subtext\">{{score}} points</p>\n      </li>\n    </ul>\n    <ul class=\"comments\" v-if=\"comments\">\n      <comment v-repeat=\"comments\"></comment>\n    </ul>\n    <p v-show=\"!comments.length\">No comments yet.</p>\n  </div>\n\n";
+
+/***/ },
+/* 101 */
+/***/ function(module, exports, __webpack_require__) {
+
+	__webpack_require__(102)
+	module.exports = __webpack_require__(104)
+	module.exports.template = __webpack_require__(105)
+
+/***/ },
+/* 102 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+	
+	// load the styles
+	var content = __webpack_require__(103);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(73)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-multi-loader/selector.js?style/stylus!./user-view.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-multi-loader/selector.js?style/stylus!./user-view.vue");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 103 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(80)();
+	exports.push([module.id, ".user-view {\n  color: $gray;\n}\n.user-view li {\n  margin: 5px 0;\n}\n.user-view .label {\n  display: inline-block;\n  min-width: 60px;\n}\n.user-view .about {\n  margin-top: 1em;\n}\n.user-view .links a {\n  text-decoration: underline;\n}\n", ""]);
+
+/***/ },
+/* 104 */
+/***/ function(module, exports, __webpack_require__) {
+
+	
+	var store = __webpack_require__(82)
 	
 	module.exports = {
 	  replace: true,
@@ -10645,8 +11168,20 @@
 	    }
 	  }
 	}
-	;(typeof module.exports === "function"? module.exports.options: module.exports).template = __vue_template__;
+	
 
+
+/***/ },
+/* 105 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "\n  <div class=\"user-view\" v-show=\"user\">\n    <ul>\n      <li><span class=\"label\">user:</span> {{user.id}}</li>\n      <li><span class=\"label\">created:</span> {{user.created | fromNow}} ago</li>\n      <li><span class=\"label\">karma:</span> {{user.karma}}</li>\n      <li>\n        <span class=\"label\">about:</span>\n        <div class=\"about\" v-html=\"user.about\"></div>\n      </li>\n    </ul>\n    <p class=\"links\">\n      <a href=\"https://news.ycombinator.com/submitted?id={{user.id}}\">submissions</a><br>\n      <a href=\"https://news.ycombinator.com/threads?id={{user.id}}\">comments</a>\n    </p>\n  </div>\n\n";
+
+/***/ },
+/* 106 */
+/***/ function(module, exports, __webpack_require__) {
+
+	module.exports = "\n  <div id=\"wrapper\">\n    <!-- header -->\n    <div id=\"header\">\n      <a id=\"yc\" href=\"http://www.ycombinator.com\">\n        <img src=\"https://news.ycombinator.com/y18.gif\">\n      </a>\n      <h1><a href=\"#\">Hacker News</a></h1>\n      <span class=\"source\">\n        Built with <a href=\"http://vuejs.org\" target=\"_blank\">Vue.js</a> |\n        <a href=\"https://github.com/yyx990803/vue-hackernews\" target=\"_blank\">Source</a>\n      </span>\n    </div>\n    <!-- main view -->\n    <component is=\"{{view}}\"\n      class=\"view\"\n      params=\"{{params}}\"\n      keep-alive\n      v-transition\n      transition-mode=\"out-in\">\n    </component>\n  </div>\n\n";
 
 /***/ }
 /******/ ]);
