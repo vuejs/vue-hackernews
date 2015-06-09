@@ -25,7 +25,7 @@ module.exports = {
       params: {
         itemId: null
       },
-      item: null,
+      item: {},
       pollOptions: null,
       comments: []
     }
