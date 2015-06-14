@@ -4,7 +4,7 @@
 
 Built with [Vue.js](http://vuejs.org) and the official [HackerNews API](https://github.com/HackerNews/API), with routing, comments, comment folding, user profile & realtime updates.
 
-The build setup uses Webpack and the [vue-multi-loader](https://github.com/Q42/vue-multi-loader) plugin, which enables Vue components to be written in a format that encapsulates a component's style, template and logic in a single file.
+The build setup uses Webpack and the [vue-loader](https://github.com/vuejs/vue-loader) plugin, which enables Vue components to be written in a format that encapsulates a component's style, template and logic in a single file.
 
 If you are using SublimeText you can get proper syntax highlighting for `*.vue` files with [vue-syntax-highlight](https://github.com/vuejs/vue-syntax-highlight).
 
