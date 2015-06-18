@@ -192,8 +192,76 @@
 
 	var _ = __webpack_require__(2)
 	var config = __webpack_require__(4)
-	var commonTagRE = /^(div|p|span|img|a|br|ul|ol|li|h1|h2|h3|h4|h5|code|pre)$/
-	var tableElementsRE = /^caption|colgroup|thead|tfoot|tbody|tr|td|th$/
+	
+	/**
+	 * Assert whether a prop is valid.
+	 *
+	 * @param {Object} prop
+	 * @param {*} value
+	 */
+	
+	exports.assertProp = function (prop, value) {
+	  var assertions = prop.assertions
+	  if (!assertions) {
+	    return true
+	  }
+	  var type = assertions.type
+	  var valid = true
+	  var expectedType
+	  if (type) {
+	    if (type === String) {
+	      expectedType = 'string'
+	      valid = typeof value === expectedType
+	    } else if (type === Number) {
+	      expectedType = 'number'
+	      valid = typeof value === 'number'
+	    } else if (type === Boolean) {
+	      expectedType = 'boolean'
+	      valid = typeof value === 'boolean'
+	    } else if (type === Function) {
+	      expectedType = 'function'
+	      valid = typeof value === 'function'
+	    } else if (type === Object) {
+	      expectedType = 'object'
+	      valid = _.isPlainObject(value)
+	    } else if (type === Array) {
+	      expectedType = 'array'
+	      valid = _.isArray(value)
+	    } else {
+	      valid = value instanceof type
+	    }
+	  }
+	  if (!valid) {
+	    _.warn(
+	      'Invalid prop: type check failed for ' +
+	      prop.path + '="' + prop.raw + '".' +
+	      ' Expected ' + formatType(expectedType) +
+	      ', got ' + formatValue(value) + '.'
+	    )
+	    return false
+	  }
+	  var validator = assertions.validator
+	  if (validator) {
+	    if (!validator.call(null, value)) {
+	      _.warn(
+	        'Invalid prop: custom validator check failed for ' +
+	        prop.path + '="' + prop.raw + '"'
+	      )
+	      return false
+	    }
+	  }
+	  return true
+	}
+	
+	function formatType (val) {
+	  return val
+	    ? val.charAt(0).toUpperCase() + val.slice(1)
+	    : 'custom type'
+	}
+	
+	function formatValue (val) {
+	  return Object.prototype.toString.call(val).slice(8, -1)
+	}
 	
 	/**
 	 * Check if an element is a component, if yes return its
@@ -204,6 +272,9 @@
 	 * @return {String|undefined}
 	 */
 	
+	exports.commonTagRE = /^(div|p|span|img|a|br|ul|ol|li|h1|h2|h3|h4|h5|code|pre)$/
+	exports.tableElementsRE = /^caption|colgroup|thead|tfoot|tbody|tr|td|th$/
+	
 	exports.checkComponent = function (el, options) {
 	  var tag = el.tagName.toLowerCase()
 	  if (tag === 'component') {
@@ -212,12 +283,12 @@
 	    el.removeAttribute('is')
 	    return exp
 	  } else if (
-	    !commonTagRE.test(tag) &&
+	    !exports.commonTagRE.test(tag) &&
 	    _.resolveAsset(options, 'components', tag)
 	  ) {
 	    return tag
 	  } else if (
-	    tableElementsRE.test(tag) &&
+	    exports.tableElementsRE.test(tag) &&
 	    (tag = _.attr(el, 'component'))
 	  ) {
 	    return tag
@@ -330,7 +401,23 @@
 	    'elementDirective',
 	    'filter',
 	    'transition'
-	  ]
+	  ],
+	
+	  /**
+	   * prop binding modes
+	   */
+	
+	  _propBindingModes: {
+	    ONE_WAY: 0,
+	    TWO_WAY: 1,
+	    ONE_TIME: 2
+	  },
+	
+	  /**
+	   * Max circular updates allowed in a batcher flush cycle.
+	   */
+	
+	  _maxUpdateCount: 100
 	
 	}
 	
@@ -352,6 +439,7 @@
 	    this._delimitersChanged = true
 	  }
 	})
+
 
 /***/ },
 /* 5 */
@@ -398,6 +486,21 @@
 	    typeof value === 'boolean'
 	  ) ? value
 	    : Number(value)
+	}
+	
+	/**
+	 * Convert string boolean literals into real booleans.
+	 *
+	 * @param {*} value
+	 * @return {*|Boolean}
+	 */
+	
+	exports.toBoolean = function (value) {
+	  return value === 'true'
+	    ? true
+	    : value === 'false'
+	      ? false
+	      : value
 	}
 	
 	/**
@@ -516,7 +619,7 @@
 	 */
 	
 	exports.isObject = function (obj) {
-	  return obj && typeof obj === 'object'
+	  return obj !== null && typeof obj === 'object'
 	}
 	
 	/**
@@ -539,9 +642,7 @@
 	 * @return {Boolean}
 	 */
 	
-	exports.isArray = function (obj) {
-	  return Array.isArray(obj)
-	}
+	exports.isArray = Array.isArray
 	
 	/**
 	 * Define a non-enumerable property
@@ -626,6 +727,7 @@
 	  }
 	  return cb
 	}
+
 
 /***/ },
 /* 6 */
@@ -906,6 +1008,8 @@
 	    el = el.content
 	  }
 	  if (el.hasChildNodes()) {
+	    trim(el, el.firstChild)
+	    trim(el, el.lastChild)
 	    rawContent = asFragment
 	      ? document.createDocumentFragment()
 	      : document.createElement('div')
@@ -915,6 +1019,12 @@
 	    }
 	  }
 	  return rawContent
+	}
+	
+	function trim (content, node) {
+	  if (node && node.nodeType === 3 && !node.data.trim()) {
+	    content.removeChild(node)
+	  }
 	}
 	
 	/**
@@ -929,6 +1039,7 @@
 	  return el.tagName &&
 	    el.tagName.toLowerCase() === 'template'
 	}
+
 
 /***/ },
 /* 8 */
@@ -1232,6 +1343,12 @@
 	  if (components) {
 	    var def
 	    for (var key in components) {
+	      if (_.commonTagRE.test(key)) {
+	        _.warn(
+	          'Do not use built-in HTML elements as component ' +
+	          'name: ' + key
+	        )
+	      }
 	      def = components[key]
 	      if (_.isPlainObject(def)) {
 	        def.name = key
@@ -1295,6 +1412,7 @@
 	  return asset
 	}
 
+
 /***/ },
 /* 10 */
 /***/ function(module, exports, __webpack_require__) {
@@ -1315,8 +1433,8 @@
 	  path: __webpack_require__(30),
 	  text: __webpack_require__(15),
 	  template: __webpack_require__(13),
-	  directive: __webpack_require__(19),
-	  expression: __webpack_require__(29)
+	  directive: __webpack_require__(16),
+	  expression: __webpack_require__(23)
 	}
 	
 	/**
@@ -1456,12 +1574,13 @@
 	var _ = __webpack_require__(2)
 	var config = __webpack_require__(4)
 	var textParser = __webpack_require__(15)
-	var dirParser = __webpack_require__(19)
+	var dirParser = __webpack_require__(16)
 	var templateParser = __webpack_require__(13)
 	var resolveAsset = _.resolveAsset
+	var propBindingModes = config._propBindingModes
 	
 	// internal directives
-	var propDef = __webpack_require__(23)
+	var propDef = __webpack_require__(17)
 	var componentDef = __webpack_require__(32)
 	
 	// terminal directives
@@ -1596,8 +1715,8 @@
 	  var propsLinkFn, parentLinkFn, replacerLinkFn
 	
 	  // 1. props
-	  propsLinkFn = props && containerAttrs
-	    ? compileProps(el, containerAttrs, props)
+	  propsLinkFn = props
+	    ? compileProps(el, containerAttrs || {}, props)
 	    : null
 	
 	  // only need to compile other attributes for
@@ -1850,21 +1969,29 @@
 	 *
 	 * @param {Element|DocumentFragment} el
 	 * @param {Object} attrs
-	 * @param {Array} propNames
+	 * @param {Array} propDescriptors
 	 * @return {Function} propsLinkFn
 	 */
 	
 	var dataAttrRE = /^data-/
 	var settablePathRE = /^[A-Za-z_$][\w$]*(\.[A-Za-z_$][\w$]*|\[[^\[\]]+\])*$/
-	var literalValueRE = /^(true|false|\d+)$/
+	var literalValueRE = /^(true|false)$|\d.*/
 	var identRE = __webpack_require__(30).identRE
 	
-	function compileProps (el, attrs, propNames) {
+	function compileProps (el, attrs, propDescriptors) {
 	  var props = []
-	  var i = propNames.length
-	  var name, value, path, prop, settable, literal, single
+	  var i = propDescriptors.length
+	  var descriptor, name, assertions, value, path, prop, literal, single
 	  while (i--) {
-	    name = propNames[i]
+	    descriptor = propDescriptors[i]
+	    // normalize prop string/descriptor
+	    if (typeof descriptor === 'object') {
+	      name = descriptor.name
+	      assertions = descriptor
+	    } else {
+	      name = descriptor
+	      assertions = null
+	    }
 	    // props could contain dashes, which will be
 	    // interpreted as minus calculations by the parser
 	    // so we need to camelize the path here
@@ -1890,7 +2017,9 @@
 	      prop = {
 	        name: name,
 	        raw: value,
-	        path: path
+	        path: path,
+	        assertions: assertions,
+	        mode: propBindingModes.ONE_WAY
 	      }
 	      var tokens = textParser.parse(value)
 	      if (tokens) {
@@ -1906,24 +2035,27 @@
 	        single = tokens.length === 1
 	        literal = literalValueRE.test(prop.parentPath)
 	        // one time: {{* prop}}
-	        prop.oneTime =
-	          literal ||
-	          (single && tokens[0].oneTime)
-	        // check one-way bindings
-	        if (!prop.oneTime) {
-	          settable = !literal && settablePathRE.test(prop.parentPath)
-	          // one way down: {{> prop}}
-	          prop.oneWayDown =
-	            !settable ||
-	            (single && tokens[0].oneWay === 60) // <
-	          // one way up: {{< prop}}
-	          prop.oneWayUp =
-	            single &&
-	            settable &&
-	            tokens[0].oneWay === 62 // >
+	        if (literal || (single && tokens[0].oneTime)) {
+	          prop.mode = propBindingModes.ONE_TIME
+	        } else if (
+	          !literal &&
+	          (single && tokens[0].twoWay)
+	        ) {
+	          if (settablePathRE.test(prop.parentPath)) {
+	            prop.mode = propBindingModes.TWO_WAY
+	          } else {
+	            _.warn(
+	              'Cannot bind two-way prop with non-settable ' +
+	              'parent path: ' + prop.parentPath
+	            )
+	          }
 	        }
 	      }
 	      props.push(prop)
+	    } else if (assertions && assertions.required) {
+	      _.warn(
+	        'Missing required prop: ' + name
+	      )
 	    }
 	  }
 	  return makePropsLinkFn(props)
@@ -1939,15 +2071,18 @@
 	function makePropsLinkFn (props) {
 	  return function propsLinkFn (vm, el) {
 	    var i = props.length
-	    var prop, path
+	    var prop, path, value
 	    while (i--) {
 	      prop = props[i]
 	      path = prop.path
 	      if (prop.dynamic) {
 	        if (vm.$parent) {
-	          if (prop.oneTime) {
+	          if (prop.mode === propBindingModes.ONE_TIME) {
 	            // one time binding
-	            vm.$set(path, vm.$parent.$get(prop.parentPath))
+	            value = vm.$parent.$get(prop.parentPath)
+	            if (_.assertProp(prop, value)) {
+	              vm.$set(path, value)
+	            }
 	          } else {
 	            // dynamic binding
 	            vm._bindDir('prop', el, prop, propDef)
@@ -1960,8 +2095,11 @@
 	          )
 	        }
 	      } else {
-	        // literal, just set once
-	        vm.$set(path, _.toNumber(prop.raw))
+	        // literal, cast it and just set once
+	        value = _.toBoolean(_.toNumber(prop.raw))
+	        if (_.assertProp(prop, value)) {
+	          vm.$set(path, value)
+	        }
 	      }
 	    }
 	  }
@@ -2588,7 +2726,7 @@
 
 	var Cache = __webpack_require__(14)
 	var config = __webpack_require__(4)
-	var dirParser = __webpack_require__(19)
+	var dirParser = __webpack_require__(16)
 	var regexEscapeRE = /[-.*+?^${}()|[\]\/\\]/g
 	var cache, tagRE, htmlRE, firstChar, lastChar
 	
@@ -2653,12 +2791,13 @@
 	  if (hit) {
 	    return hit
 	  }
+	  text = text.replace(/\n/g, '')
 	  if (!tagRE.test(text)) {
 	    return null
 	  }
 	  var tokens = []
 	  var lastIndex = tagRE.lastIndex = 0
-	  var match, index, value, first, oneTime, oneWay
+	  var match, index, value, first, oneTime, twoWay
 	  /* jshint boss:true */
 	  while (match = tagRE.exec(text)) {
 	    index = match.index
@@ -2670,9 +2809,9 @@
 	    }
 	    // tag token
 	    first = match[1].charCodeAt(0)
-	    oneTime = first === 42    // *
-	    oneWay = first === 62 || first === 60 // > or <
-	    value = oneTime || oneWay
+	    oneTime = first === 42 // *
+	    twoWay = first === 64  // @
+	    value = oneTime || twoWay
 	      ? match[1].slice(1)
 	      : match[1]
 	    tokens.push({
@@ -2680,7 +2819,7 @@
 	      value: value.trim(),
 	      html: htmlRE.test(match[0]),
 	      oneTime: oneTime,
-	      oneWay: oneWay ? first : 0
+	      twoWay: twoWay
 	    })
 	    lastIndex = index + match[0].length
 	  }
@@ -2763,10 +2902,7 @@
 
 
 /***/ },
-/* 16 */,
-/* 17 */,
-/* 18 */,
-/* 19 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(2)
@@ -2950,13 +3086,12 @@
 	}
 
 /***/ },
-/* 20 */,
-/* 21 */,
-/* 22 */,
-/* 23 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Watcher = __webpack_require__(24)
+	var _ = __webpack_require__(2)
+	var Watcher = __webpack_require__(18)
+	var bindingModes = __webpack_require__(4)._propBindingModes
 	
 	module.exports = {
 	
@@ -2974,30 +3109,32 @@
 	    // sure it doesn't cause other watchers to re-evaluate.
 	    var locked = false
 	
-	    if (!prop.oneWayUp) {
-	      this.parentWatcher = new Watcher(
-	        parent,
-	        parentKey,
-	        function (val) {
-	          if (!locked) {
-	            locked = true
-	            // all props have been initialized already
+	    this.parentWatcher = new Watcher(
+	      parent,
+	      parentKey,
+	      function (val) {
+	        if (!locked) {
+	          locked = true
+	          // all props have been initialized already
+	          if (_.assertProp(prop, val)) {
 	            child[childKey] = val
-	            locked = false
 	          }
-	        },
-	        { sync: true }
-	      )
-	      
-	      // set the child initial value first, before setting
-	      // up the child watcher to avoid triggering it
-	      // immediately.
-	      child.$set(childKey, this.parentWatcher.value)
+	          locked = false
+	        }
+	      }
+	    )
+	    
+	    // set the child initial value first, before setting
+	    // up the child watcher to avoid triggering it
+	    // immediately.
+	    var value = this.parentWatcher.value
+	    if (_.assertProp(prop, value)) {
+	      child.$set(childKey, value)
 	    }
 	
 	    // only setup two-way binding if this is not a one-way
 	    // binding.
-	    if (!prop.oneWayDown) {
+	    if (prop.mode === bindingModes.TWO_WAY) {
 	      this.childWatcher = new Watcher(
 	        child,
 	        childKey,
@@ -3007,14 +3144,8 @@
 	            parent.$set(parentKey, val)
 	            locked = false
 	          }
-	        },
-	        { sync: true }
+	        }
 	      )
-	
-	      // set initial value for one-way up binding
-	      if (prop.oneWayUp) {
-	        parent.$set(parentKey, this.childWatcher.value)
-	      }
 	    }
 	  },
 	
@@ -3030,13 +3161,13 @@
 
 
 /***/ },
-/* 24 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(2)
 	var config = __webpack_require__(4)
-	var Observer = __webpack_require__(25)
-	var expParser = __webpack_require__(29)
+	var Observer = __webpack_require__(19)
+	var expParser = __webpack_require__(23)
 	var batcher = __webpack_require__(31)
 	var uid = 0
 	
@@ -3053,7 +3184,6 @@
 	 *                 - {Boolean} twoWay
 	 *                 - {Boolean} deep
 	 *                 - {Boolean} user
-	 *                 - {Boolean} sync
 	 *                 - {Function} [preProcess]
 	 * @constructor
 	 */
@@ -3070,7 +3200,6 @@
 	  this.deep = !!options.deep
 	  this.user = !!options.user
 	  this.twoWay = !!options.twoWay
-	  this.sync = !!options.sync
 	  this.filters = options.filters
 	  this.preProcess = options.preProcess
 	  this.deps = []
@@ -3197,7 +3326,7 @@
 	 */
 	
 	p.update = function () {
-	  if (this.sync || !config.async) {
+	  if (!config.async) {
 	    this.run()
 	  } else {
 	    batcher.push(this)
@@ -3214,7 +3343,7 @@
 	    var value = this.get()
 	    if (
 	      value !== this.value ||
-	      Array.isArray(value) ||
+	      _.isArray(value) ||
 	      this.deep
 	    ) {
 	      var oldValue = this.value
@@ -3271,15 +3400,15 @@
 
 
 /***/ },
-/* 25 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(2)
 	var config = __webpack_require__(4)
-	var Dep = __webpack_require__(26)
-	var arrayMethods = __webpack_require__(27)
+	var Dep = __webpack_require__(20)
+	var arrayMethods = __webpack_require__(21)
 	var arrayKeys = Object.getOwnPropertyNames(arrayMethods)
-	__webpack_require__(28)
+	__webpack_require__(22)
 	
 	var uid = 0
 	
@@ -3523,7 +3652,7 @@
 
 
 /***/ },
-/* 26 */
+/* 20 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(2)
@@ -3592,7 +3721,7 @@
 
 
 /***/ },
-/* 27 */
+/* 21 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(2)
@@ -3689,7 +3818,7 @@
 	module.exports = arrayMethods
 
 /***/ },
-/* 28 */
+/* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(2)
@@ -3776,7 +3905,7 @@
 	)
 
 /***/ },
-/* 29 */
+/* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(2)
@@ -4044,6 +4173,12 @@
 	}
 
 /***/ },
+/* 24 */,
+/* 25 */,
+/* 26 */,
+/* 27 */,
+/* 28 */,
+/* 29 */,
 /* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -4379,7 +4514,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(2)
-	var MAX_UPDATE_COUNT = 10
+	var config = __webpack_require__(4)
 	
 	// we have two separate queues: one for directive updates
 	// and one for user watcher registered via $watch().
@@ -4450,7 +4585,7 @@
 	    } else {
 	      has[id]++
 	      // detect possible infinite update loops
-	      if (has[id] > MAX_UPDATE_COUNT) {
+	      if (has[id] > config._maxUpdateCount) {
 	        _.warn(
 	          'You may have an infinite update loop for the ' +
 	          'watcher with expression: "' + job.expression + '".'
@@ -4473,6 +4608,7 @@
 	    }
 	  }
 	}
+
 
 /***/ },
 /* 32 */
@@ -4796,8 +4932,14 @@
 	  if (_.isTemplate(el)) {
 	    el = templateParser.parse(el)
 	  }
-	  if (options && options.template) {
-	    el = transcludeTemplate(el, options)
+	  if (options) {
+	    if (options._asComponent && !options.template) {
+	      options.template = '<content></content>'
+	    }
+	    if (options.template) {
+	      options._content = _.extractContent(el)
+	      el = transcludeTemplate(el, options)
+	    }
 	  }
 	  if (el instanceof DocumentFragment) {
 	    // anchors for block instance
@@ -4824,15 +4966,15 @@
 	  if (!frag) {
 	    _.warn('Invalid template option: ' + template)
 	  } else {
-	    options._content = _.extractContent(el)
 	    var replacer = frag.firstChild
 	    if (options.replace) {
 	      if (
 	        frag.childNodes.length > 1 ||
 	        replacer.nodeType !== 1 ||
-	        // when root node has v-repeat, the instance ends up
-	        // having multiple top-level nodes, thus becoming a
-	        // block instance. (#835)
+	        // when root node is <content> or has v-repeat, the
+	        // instance could end up having multiple top-level
+	        // nodes, thus becoming a block instance.
+	        replacer.tagName.toLowerCase() === 'content' ||
 	        replacer.hasAttribute(config.prefix + 'repeat')
 	      ) {
 	        return frag
@@ -4891,6 +5033,7 @@
 	  }
 	}
 
+
 /***/ },
 /* 34 */
 /***/ function(module, exports, __webpack_require__) {
@@ -4918,7 +5061,7 @@
 	// internal directives that should not be used directly
 	// but we still want to expose them for advanced usage.
 	exports._component = __webpack_require__(32)
-	exports._prop      = __webpack_require__(23)
+	exports._prop      = __webpack_require__(17)
 
 /***/ },
 /* 35 */
@@ -5760,6 +5903,7 @@
 	
 	module.exports = Transition
 
+
 /***/ },
 /* 47 */
 /***/ function(module, exports, __webpack_require__) {
@@ -5767,6 +5911,9 @@
 	var _ = __webpack_require__(2)
 	var queue = []
 	var queued = false
+	var defer = _.inBrowser
+	  ? window.requestAnimationFrame || _.nextTick
+	  : _.nextTick
 	
 	/**
 	 * Push a job into the queue.
@@ -5799,6 +5946,7 @@
 	  // unused variable f
 	  return f
 	}
+
 
 /***/ },
 /* 48 */
@@ -6144,8 +6292,8 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(2)
-	var Watcher = __webpack_require__(24)
-	var dirParser = __webpack_require__(19)
+	var Watcher = __webpack_require__(18)
+	var dirParser = __webpack_require__(16)
 	
 	module.exports = {
 	
@@ -6368,7 +6516,7 @@
 	var isObject = _.isObject
 	var isPlainObject = _.isPlainObject
 	var textParser = __webpack_require__(15)
-	var expParser = __webpack_require__(29)
+	var expParser = __webpack_require__(23)
 	var templateParser = __webpack_require__(13)
 	var compiler = __webpack_require__(11)
 	var uid = 0
@@ -6468,7 +6616,7 @@
 	      // check inline-template
 	      if (this._checkParam('inline-template') !== null) {
 	        // extract inline template as a DocumentFragment
-	        this.inlineTempalte = _.extractContent(this.el, true)
+	        this.inlineTemplate = _.extractContent(this.el, true)
 	      }
 	      var tokens = textParser.parse(id)
 	      if (tokens) {
@@ -6716,7 +6864,7 @@
 	      el: templateParser.clone(this.template),
 	      data: data,
 	      inherit: this.inherit,
-	      template: this.inlineTempalte,
+	      template: this.inlineTemplate,
 	      // repeater meta, e.g. $index, $key
 	      _meta: meta,
 	      // mark this as an inline-repeat instance
@@ -6724,7 +6872,7 @@
 	      // is this a component?
 	      _asComponent: this.asComponent,
 	      // linker cachable if no inline-template
-	      _linkerCachable: !this.inlineTempalte,
+	      _linkerCachable: !this.inlineTemplate,
 	      // transclusion host
 	      _host: this._host,
 	      // pre-compiled linker for simple repeats
@@ -7478,32 +7626,49 @@
 	    var raw = contentOwner.$options._content
 	    var content
 	    if (!raw) {
-	      // fallback content
-	      // extract as a fragment
-	      content = _.extractContent(this.el, true)
-	      this.compile(content, vm)
+	      this.fallback()
 	      return
 	    }
 	    var parent = contentOwner.$parent
 	    var selector = this.el.getAttribute('select')
 	    if (!selector) {
-	      // default content
-	      // Importent: clone the rawContent before extracting
-	      // content because the <content> may be inside a v-if
-	      // and need to be compiled more than once.
-	      content = _.extractContent(raw.cloneNode(true), true)
-	      this.compile(content, parent, vm)
+	      // Default content
+	      var self = this
+	      var compileDefaultContent = function () {
+	        self.compile(
+	          extractFragment(raw.childNodes, raw, true),
+	          contentOwner.$parent,
+	          vm
+	        )
+	      }
+	      if (!contentOwner._isCompiled) {
+	        // defer until the end of instance compilation,
+	        // because the default outlet must wait until all
+	        // other possible outlets with selectors have picked
+	        // out their contents.
+	        contentOwner.$once('hook:compiled', compileDefaultContent)
+	      } else {
+	        compileDefaultContent()
+	      }
 	    } else {
 	      // select content
 	      selector = vm.$interpolate(selector)
-	      content = raw.querySelector(selector)
-	      // only allow top-level select
-	      if (content && content.parentNode === raw) {
-	        // same deal, clone the node for v-if
-	        content = content.cloneNode(true)
-	        this.compile(content, parent, vm)
+	      var nodes = raw.querySelectorAll(selector)
+	      if (nodes.length) {
+	        content = extractFragment(nodes, raw)
+	        if (content.hasChildNodes()) {
+	          this.compile(content, parent, vm)
+	        } else {
+	          this.fallback()
+	        }
+	      } else {
+	        this.fallback()
 	      }
 	    }
+	  },
+	
+	  fallback: function () {
+	    this.compile(_.extractContent(this.el, true), this.vm)
 	  },
 	
 	  compile: function (content, owner, host) {
@@ -7522,7 +7687,35 @@
 	      this.unlink()
 	    } 
 	  }
+	}
 	
+	/**
+	 * Extract qualified content nodes from a node list.
+	 *
+	 * @param {NodeList} nodes
+	 * @param {Element} parent
+	 * @param {Boolean} main
+	 * @return {DocumentFragment}
+	 */
+	
+	function extractFragment (nodes, parent, main) {
+	  var frag = document.createDocumentFragment()
+	  for (var i = 0, l = nodes.length; i < l; i++) {
+	    var node = nodes[i]
+	    // if this is the main outlet, we want to skip all
+	    // previously selected nodes;
+	    // otherwise, we want to mark the node as selected.
+	    // clone the node so the original raw content remains
+	    // intact. this ensures proper re-compilation in cases
+	    // where the outlet is inside a conditional block
+	    if (main && !node.__v_selected) {
+	      frag.appendChild(node.cloneNode(true))
+	    } else if (!main && node.parentNode === parent) {
+	      node.__v_selected = true
+	      frag.appendChild(node.cloneNode(true))
+	    }
+	  }
+	  return frag
 	}
 
 
@@ -7622,6 +7815,7 @@
 	    this.$mount(options.el)
 	  }
 	}
+
 
 /***/ },
 /* 60 */
@@ -7771,8 +7965,8 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var _ = __webpack_require__(2)
-	var Observer = __webpack_require__(25)
-	var Dep = __webpack_require__(26)
+	var Observer = __webpack_require__(19)
+	var Dep = __webpack_require__(20)
 	
 	/**
 	 * Setup the scope of an instance, which contains:
@@ -7783,10 +7977,37 @@
 	 */
 	
 	exports._initScope = function () {
+	  this._initProps()
 	  this._initData()
 	  this._initComputed()
 	  this._initMethods()
 	  this._initMeta()
+	}
+	
+	/**
+	 * Initialize props.
+	 */
+	
+	exports._initProps = function () {
+	  // make sure all props properties are observed
+	  var data = this._data
+	  var props = this.$options.props
+	  var prop, key, i
+	  if (props) {
+	    i = props.length
+	    while (i--) {
+	      prop = props[i]
+	      // props can be strings or object descriptors
+	      key = _.camelize(
+	        typeof prop === 'string'
+	          ? prop
+	          : prop.name
+	      )
+	      if (!(key in data) && key !== '$data') {
+	        data[key] = undefined
+	      }
+	    }
+	  }
 	}
 	
 	/**
@@ -7796,19 +8017,8 @@
 	exports._initData = function () {
 	  // proxy data on instance
 	  var data = this._data
-	  var i, key
-	  // make sure all props properties are observed
-	  var props = this.$options.props
-	  if (props) {
-	    i = props.length
-	    while (i--) {
-	      key = _.camelize(props[i])
-	      if (!(key in data) && key !== '$data') {
-	        data[key] = undefined
-	      }
-	    }
-	  }
 	  var keys = Object.keys(data)
+	  var i, key
 	  i = keys.length
 	  while (i--) {
 	    key = keys[i]
@@ -8207,9 +8417,9 @@
 
 	var _ = __webpack_require__(2)
 	var config = __webpack_require__(4)
-	var Watcher = __webpack_require__(24)
+	var Watcher = __webpack_require__(18)
 	var textParser = __webpack_require__(15)
-	var expParser = __webpack_require__(29)
+	var expParser = __webpack_require__(23)
 	
 	/**
 	 * A directive links a DOM element with a piece of data,
@@ -8521,11 +8731,11 @@
 /* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Watcher = __webpack_require__(24)
+	var Watcher = __webpack_require__(18)
 	var Path = __webpack_require__(30)
 	var textParser = __webpack_require__(15)
-	var dirParser = __webpack_require__(19)
-	var expParser = __webpack_require__(29)
+	var dirParser = __webpack_require__(16)
+	var expParser = __webpack_require__(23)
 	var filterRE = /[^|]\|[^|]/
 	
 	/**
@@ -9972,8 +10182,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/stylus-loader/index.js!./../node_modules/vue-loader/selector.js?style/stylus!./app.vue", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/stylus-loader/index.js!./../node_modules/vue-loader/selector.js?style/stylus!./app.vue");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./../node_modules/stylus-loader/index.js!./../../vue-loader/lib/selector.js?style/stylus!./app.vue", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./../node_modules/stylus-loader/index.js!./../../vue-loader/lib/selector.js?style/stylus!./app.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -10274,7 +10484,6 @@
 /* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
 	module.exports = {
 	  el: '#app',
 	  data: {
@@ -10295,8 +10504,6 @@
 	    'user-view': __webpack_require__(102)
 	  }
 	}
-	
-
 
 /***/ },
 /* 77 */
@@ -10348,8 +10555,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-loader/selector.js?style/stylus!./news-view.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-loader/selector.js?style/stylus!./news-view.vue");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../../vue-loader/lib/selector.js?style/stylus!./news-view.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../../vue-loader/lib/selector.js?style/stylus!./news-view.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -10369,7 +10576,6 @@
 /* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
 	var store = __webpack_require__(83)
 	
 	module.exports = {
@@ -10411,8 +10617,6 @@
 	    }
 	  }
 	}
-	
-
 
 /***/ },
 /* 83 */
@@ -11104,8 +11308,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-loader/selector.js?style/stylus!./item.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-loader/selector.js?style/stylus!./item.vue");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../../vue-loader/lib/selector.js?style/stylus!./item.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../../vue-loader/lib/selector.js?style/stylus!./item.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -11125,7 +11329,6 @@
 /* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
 	module.exports = {
 	  replace: true,
 	  props: ['page', 'item'],
@@ -11146,20 +11349,18 @@
 	    }
 	  }
 	}
-	
-
 
 /***/ },
 /* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "\n  <div class=\"item\">\n    <span class=\"index\">{{index}}.</span>\n    <p>\n      <a class=\"title\" href=\"{{href}}\" target=\"_blank\">{{item.title}}</a>\n      <span class=\"domain\" v-show=\"showDomain\">\n        ({{item.url | domain}})\n      </span>\n    </p>\n    <p class=\"subtext\">\n      <span v-show=\"showInfo\">\n        {{item.score}} points by\n        <a href=\"#/user/{{item.by}}\">{{item.by}}</a>\n      </span>\n      {{item.time | fromNow}} ago\n      <span class=\"comments-link\" v-show=\"showInfo\">\n        | <a href=\"#/item/{{item.id}}\">{{item.descendants}} comments</a>\n      </span>\n    </p>\n  </div>\n\n";
+	module.exports = "<div class=\"item\">\n    <span class=\"index\">{{index}}.</span>\n    <p>\n      <a class=\"title\" href=\"{{href}}\" target=\"_blank\">{{item.title}}</a>\n      <span class=\"domain\" v-show=\"showDomain\">\n        ({{item.url | domain}})\n      </span>\n    </p>\n    <p class=\"subtext\">\n      <span v-show=\"showInfo\">\n        {{item.score}} points by\n        <a href=\"#/user/{{item.by}}\">{{item.by}}</a>\n      </span>\n      {{item.time | fromNow}} ago\n      <span class=\"comments-link\" v-show=\"showInfo\">\n        | <a href=\"#/item/{{item.id}}\">{{item.descendants}} comments</a>\n      </span>\n    </p>\n  </div>";
 
 /***/ },
 /* 91 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "\n  <div class=\"news-view\" v-class=\"loading:!items.length\">\n    <!-- item list -->\n    <ul>\n      <item v-repeat=\"item:items\" page=\"{{displayPage}}\" track-by=\"id\"></item>\n    </ul>\n    <!-- navigation -->\n    <div class=\"nav\" v-show=\"items.length > 0\">\n      <a v-if=\"params.page > 1\" href=\"#/news/{{params.page - 1}}\">&lt; prev</a>\n      <a v-if=\"params.page < 4\" href=\"#/news/{{params.page + 1}}\">more...</a>\n    </div>\n  </div>\n\n";
+	module.exports = "<div class=\"news-view\" v-class=\"loading:!items.length\">\n    <!-- item list -->\n    <item v-repeat=\"item:items\" page=\"{{displayPage}}\" track-by=\"id\"></item>\n    <!-- navigation -->\n    <div class=\"nav\" v-show=\"items.length > 0\">\n      <a v-if=\"params.page > 1\" href=\"#/news/{{params.page - 1}}\">&lt; prev</a>\n      <a v-if=\"params.page < 4\" href=\"#/news/{{params.page + 1}}\">more...</a>\n    </div>\n  </div>";
 
 /***/ },
 /* 92 */
@@ -11185,8 +11386,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-loader/selector.js?style/stylus!./item-view.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-loader/selector.js?style/stylus!./item-view.vue");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../../vue-loader/lib/selector.js?style/stylus!./item-view.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../../vue-loader/lib/selector.js?style/stylus!./item-view.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -11206,7 +11407,6 @@
 /* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
 	var store = __webpack_require__(83)
 	
 	module.exports = {
@@ -11254,8 +11454,6 @@
 	    comment: __webpack_require__(96)
 	  }
 	}
-	
-
 
 /***/ },
 /* 96 */
@@ -11281,8 +11479,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-loader/selector.js?style/stylus!./comment.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-loader/selector.js?style/stylus!./comment.vue");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../../vue-loader/lib/selector.js?style/stylus!./comment.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../../vue-loader/lib/selector.js?style/stylus!./comment.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -11302,7 +11500,6 @@
 /* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
 	var store = __webpack_require__(83)
 	
 	module.exports = {
@@ -11321,20 +11518,18 @@
 	    }
 	  }
 	}
-	
-
 
 /***/ },
 /* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "\n  <li v-show=\"text\">\n    <div class=\"comhead\">\n      <a class=\"toggle\" v-on=\"click:open = !open\">{{open ? '[-]' : '[+]'}}</a>\n      <a href=\"#/user/{{by}}\">{{by}}</a>\n      {{time | fromNow}} ago\n    </div>\n    <div class=\"comment-content\" v-html=\"text\" v-show=\"open\"></div>\n    <ul class=\"child-comments\" v-if=\"kids\" v-show=\"open\">\n      <comment v-repeat=\"comments\"></comment>\n    </ul>\n  </li>\n\n";
+	module.exports = "<li v-show=\"text\">\n    <div class=\"comhead\">\n      <a class=\"toggle\" v-on=\"click:open = !open\">{{open ? '[-]' : '[+]'}}</a>\n      <a href=\"#/user/{{by}}\">{{by}}</a>\n      {{time | fromNow}} ago\n    </div>\n    <div class=\"comment-content\" v-html=\"text\" v-show=\"open\"></div>\n    <ul class=\"child-comments\" v-if=\"kids\" v-show=\"open\">\n      <comment v-repeat=\"comments\"></comment>\n    </ul>\n  </li>";
 
 /***/ },
 /* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "\n  <div class=\"item-view\" v-show=\"item\">\n    <item item=\"{{item}}\"></item>\n    <ul class=\"poll-options\" v-if=\"pollOptions\">\n      <li v-repeat=\"pollOptions\">\n        <p>{{text}}</p>\n        <p class=\"subtext\">{{score}} points</p>\n      </li>\n    </ul>\n    <ul class=\"comments\" v-if=\"comments\">\n      <comment v-repeat=\"comments\"></comment>\n    </ul>\n    <p v-show=\"!comments.length\">No comments yet.</p>\n  </div>\n\n";
+	module.exports = "<div class=\"item-view\" v-show=\"item\">\n    <item item=\"{{item}}\"></item>\n    <ul class=\"poll-options\" v-if=\"pollOptions\">\n      <li v-repeat=\"pollOptions\">\n        <p>{{text}}</p>\n        <p class=\"subtext\">{{score}} points</p>\n      </li>\n    </ul>\n    <ul class=\"comments\" v-if=\"comments\">\n      <comment v-repeat=\"comments\"></comment>\n    </ul>\n    <p v-show=\"!comments.length\">No comments yet.</p>\n  </div>";
 
 /***/ },
 /* 102 */
@@ -11360,8 +11555,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-loader/selector.js?style/stylus!./user-view.vue", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../node_modules/vue-loader/selector.js?style/stylus!./user-view.vue");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../../vue-loader/lib/selector.js?style/stylus!./user-view.vue", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/stylus-loader/index.js!./../../../vue-loader/lib/selector.js?style/stylus!./user-view.vue");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -11381,7 +11576,6 @@
 /* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
-	
 	var store = __webpack_require__(83)
 	
 	module.exports = {
@@ -11409,20 +11603,18 @@
 	    }
 	  }
 	}
-	
-
 
 /***/ },
 /* 106 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "\n  <div class=\"user-view\" v-show=\"user\">\n    <ul>\n      <li><span class=\"label\">user:</span> {{user.id}}</li>\n      <li><span class=\"label\">created:</span> {{user.created | fromNow}} ago</li>\n      <li><span class=\"label\">karma:</span> {{user.karma}}</li>\n      <li>\n        <span class=\"label\">about:</span>\n        <div class=\"about\" v-html=\"user.about\"></div>\n      </li>\n    </ul>\n    <p class=\"links\">\n      <a href=\"https://news.ycombinator.com/submitted?id={{user.id}}\">submissions</a><br>\n      <a href=\"https://news.ycombinator.com/threads?id={{user.id}}\">comments</a>\n    </p>\n  </div>\n\n";
+	module.exports = "<div class=\"user-view\" v-show=\"user\">\n    <ul>\n      <li><span class=\"label\">user:</span> {{user.id}}</li>\n      <li><span class=\"label\">created:</span> {{user.created | fromNow}} ago</li>\n      <li><span class=\"label\">karma:</span> {{user.karma}}</li>\n      <li>\n        <span class=\"label\">about:</span>\n        <div class=\"about\" v-html=\"user.about\"></div>\n      </li>\n    </ul>\n    <p class=\"links\">\n      <a href=\"https://news.ycombinator.com/submitted?id={{user.id}}\">submissions</a><br>\n      <a href=\"https://news.ycombinator.com/threads?id={{user.id}}\">comments</a>\n    </p>\n  </div>";
 
 /***/ },
 /* 107 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "\n  <div id=\"wrapper\">\n    <!-- header -->\n    <div id=\"header\">\n      <a id=\"yc\" href=\"http://www.ycombinator.com\">\n        <img src=\"https://news.ycombinator.com/y18.gif\">\n      </a>\n      <h1><a href=\"#\">Hacker News</a></h1>\n      <span class=\"source\">\n        Built with <a href=\"http://vuejs.org\" target=\"_blank\">Vue.js</a> |\n        <a href=\"https://github.com/yyx990803/vue-hackernews\" target=\"_blank\">Source</a>\n      </span>\n    </div>\n    <!-- main view -->\n    <component is=\"{{view}}\"\n      class=\"view\"\n      params=\"{{params}}\"\n      keep-alive\n      v-transition\n      transition-mode=\"out-in\">\n    </component>\n  </div>\n\n";
+	module.exports = "<div id=\"wrapper\">\n    <!-- header -->\n    <div id=\"header\">\n      <a id=\"yc\" href=\"http://www.ycombinator.com\">\n        <img src=\"https://news.ycombinator.com/y18.gif\">\n      </a>\n      <h1><a href=\"#\">Hacker News</a></h1>\n      <span class=\"source\">\n        Built with <a href=\"http://vuejs.org\" target=\"_blank\">Vue.js</a> |\n        <a href=\"https://github.com/yyx990803/vue-hackernews\" target=\"_blank\">Source</a>\n      </span>\n    </div>\n    <!-- main view -->\n    <component is=\"{{view}}\"\n      class=\"view\"\n      params=\"{{params}}\"\n      keep-alive\n      v-transition\n      transition-mode=\"out-in\">\n    </component>\n  </div>";
 
 /***/ }
 /******/ ]);

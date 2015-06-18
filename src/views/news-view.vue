@@ -1,9 +1,7 @@
 <template>
   <div class="news-view" v-class="loading:!items.length">
     <!-- item list -->
-    <ul>
-      <item v-repeat="item:items" page="{{displayPage}}" track-by="id"></item>
-    </ul>
+    <item v-repeat="item:items" page="{{displayPage}}" track-by="id"></item>
     <!-- navigation -->
     <div class="nav" v-show="items.length > 0">
       <a v-if="params.page > 1" href="#/news/{{params.page - 1}}">&lt; prev</a>
