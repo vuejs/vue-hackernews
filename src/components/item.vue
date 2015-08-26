@@ -23,13 +23,11 @@
 <script>
 module.exports = {
   replace: true,
-  props: ['page', 'item'],
+  props: {
+    item: Object,
+    index: Number
+  },
   computed: {
-    index: function () {
-      if (this.page) {
-        return (this.page - 1) * 30 + this.$index + 1
-      }
-    },
     href: function () {
       return this.item.url || ('#/item/' + this.item.id)
     },

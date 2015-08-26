@@ -20,13 +20,16 @@
 var store = require('../store')
 
 module.exports = {
-  replace: true,
-  props: ['params'],
+  props: {
+    params: {
+      type: Object,
+      default: function () {
+        return { userId: null }
+      }
+    }
+  },
   data: function () {
     return {
-      params: {
-        userId: null
-      },
       user: {}
     }
   },

@@ -33,10 +33,6 @@ module.exports = {
       itemId: null
     }
   },
-  filters: {
-    fromNow: require('./filters/from-now'),
-    domain: require('./filters/domain')
-  },
   components: {
     'news-view': require('./views/news-view.vue'),
     'item-view': require('./views/item-view.vue'),

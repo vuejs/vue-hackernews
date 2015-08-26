@@ -1,7 +1,12 @@
 <template>
   <div class="news-view" v-class="loading:!items.length">
     <!-- item list -->
-    <item v-repeat="item:items" page="{{displayPage}}" track-by="id"></item>
+    <item
+      v-for="item in items"
+      item="{{item}}"
+      index="{{getItemIndex($index)}}"
+      track-by="id">
+    </item>
     <!-- navigation -->
     <div class="nav" v-show="items.length > 0">
       <a v-if="params.page > 1" href="#/news/{{params.page - 1}}">&lt; prev</a>
@@ -14,13 +19,16 @@
 var store = require('../store')
 
 module.exports = {
-  replace: true,
-  props: ['params'],
+  props: {
+    params: {
+      type: Object,
+      default: function () {
+        return { page: 1 }
+      }
+    }
+  },
   data: function () {
     return {
-      params: {
-        page: 1
-      },
       displayPage: 1,
       items: []
     }
@@ -37,9 +45,6 @@ module.exports = {
   destroyed: function () {
     store.removeListener('update', this.update)
   },
-  components: {
-    item: require('../components/item.vue')
-  },
   methods: {
     update: function (switchingPage) {
       store.fetchItemsByPage(this.params.page, function (items) {
@@ -49,6 +54,9 @@ module.exports = {
           window.scrollTo(0, 0)
         }
       }.bind(this))
+    },
+    getItemIndex: function (index) {
+      return (this.displayPage - 1) * store.storiesPerPage + index + 1
     }
   }
 }

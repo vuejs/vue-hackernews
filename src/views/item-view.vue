@@ -2,13 +2,13 @@
   <div class="item-view" v-show="item">
     <item item="{{item}}"></item>
     <ul class="poll-options" v-if="pollOptions">
-      <li v-repeat="pollOptions">
-        <p>{{text}}</p>
-        <p class="subtext">{{score}} points</p>
+      <li v-for="option in pollOptions">
+        <p>{{option.text}}</p>
+        <p class="subtext">{{option.score}} points</p>
       </li>
     </ul>
     <ul class="comments" v-if="comments">
-      <comment v-repeat="comments"></comment>
+      <comment v-for="comment in comments" comment="{{comment}}"></comment>
     </ul>
     <p v-show="!comments.length">No comments yet.</p>
   </div>
@@ -18,13 +18,11 @@
 var store = require('../store')
 
 module.exports = {
-  replace: true,
-  props: ['params'],
+  props: {
+    params: Object
+  },
   data: function () {
     return {
-      params: {
-        itemId: null
-      },
       item: {},
       pollOptions: null,
       comments: []
@@ -56,10 +54,6 @@ module.exports = {
         this.pollOptions = options
       }.bind(this))
     }
-  },
-  components: {
-    item: require('../components/item.vue'),
-    comment: require('../components/comment.vue')
   }
 }
 </script>

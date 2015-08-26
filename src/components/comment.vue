@@ -1,13 +1,15 @@
 <template>
-  <li v-show="text">
+  <li v-show="comment.text">
     <div class="comhead">
-      <a class="toggle" v-on="click:open = !open">{{open ? '[-]' : '[+]'}}</a>
-      <a href="#/user/{{by}}">{{by}}</a>
-      {{time | fromNow}} ago
+      <a class="toggle" v-on="click: open = !open">{{open ? '[-]' : '[+]'}}</a>
+      <a href="#/user/{{comment.by}}">{{comment.by}}</a>
+      {{comment.time | fromNow}} ago
     </div>
-    <div class="comment-content" v-html="text" v-show="open"></div>
-    <ul class="child-comments" v-if="kids" v-show="open">
-      <comment v-repeat="comments"></comment>
+    <div class="comment-content" v-show="open">
+      {{{comment.text}}}
+    </div>
+    <ul class="child-comments" v-if="comment.kids" v-show="open">
+      <comment v-for="comment in childComments" comment="{{comment}}"></comment>
     </ul>
   </li>
 </template>
@@ -16,17 +18,20 @@
 var store = require('../store')
 
 module.exports = {
-  replace: true,
+  name: 'comment',
+  props: {
+    comment: Object
+  },
   data: function () {
     return {
-      open: true,
-      comments: null
+      childComments: [],
+      open: true
     }
   },
   created: function () {
-    if (this.kids) {
-      store.fetchItems(this.kids, function (comments) {
-        this.comments = comments
+    if (this.comment.kids) {
+      store.fetchItems(this.comment.kids, function (comments) {
+        this.childComments = comments
       }.bind(this))
     }
   }

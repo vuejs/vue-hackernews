@@ -4,7 +4,22 @@
 
 var Vue = require('vue')
 var Router = require('director').Router
+
+// strict mode
+Vue.config.strict = true
+
+// global filters
+Vue.filter('fromNow', require('./filters/from-now'))
+Vue.filter('domain', require('./filters/domain'))
+
+// global components
+Vue.component('comment', require('./components/comment.vue'))
+Vue.component('item', require('./components/item.vue'))
+
+// app instance
 var app = new Vue(require('./app.vue'))
+
+// routing
 var router = new Router()
 
 router.on('/news/:page', function (page) {
