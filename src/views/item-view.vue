@@ -16,6 +16,8 @@
 
 <script>
 var store = require('../store')
+var Item = require('../components/item.vue')
+var Comment = require('../components/comment.vue')
 
 module.exports = {
   props: {
@@ -27,6 +29,10 @@ module.exports = {
       pollOptions: null,
       comments: []
     }
+  },
+  components: {
+    item: Item,
+    comment: Comment
   },
   watch: {
     'params.itemId': 'update'

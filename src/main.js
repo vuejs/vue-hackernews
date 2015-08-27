@@ -8,13 +8,9 @@ var Router = require('director').Router
 // strict mode
 Vue.config.strict = true
 
-// global filters
+// register filters globally
 Vue.filter('fromNow', require('./filters/from-now'))
 Vue.filter('domain', require('./filters/domain'))
-
-// global components
-Vue.component('comment', require('./components/comment.vue'))
-Vue.component('item', require('./components/item.vue'))
 
 // app instance
 var app = new Vue(require('./app.vue'))

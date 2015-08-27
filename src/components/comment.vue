@@ -18,7 +18,7 @@
 var store = require('../store')
 
 module.exports = {
-  name: 'comment',
+  name: 'comment', // for recursively using self
   props: {
     comment: Object
   },

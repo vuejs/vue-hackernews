@@ -17,6 +17,7 @@
 
 <script>
 var store = require('../store')
+var Item = require('../components/item.vue')
 
 module.exports = {
   props: {
@@ -32,6 +33,9 @@ module.exports = {
       displayPage: 1,
       items: []
     }
+  },
+  components: {
+    item: Item
   },
   watch: {
     'params.page': function () {
