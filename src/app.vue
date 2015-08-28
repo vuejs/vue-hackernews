@@ -12,11 +12,12 @@
       </span>
     </div>
     <!-- main view -->
-    <component is="{{view}}"
+    <component
       class="view"
-      params="{{params}}"
+      is="{{view}}"
+      prop-params="params"
       keep-alive
-      v-transition
+      transition
       transition-mode="out-in">
     </component>
   </div>

@@ -6,12 +6,14 @@
       <li><span class="label">karma:</span> {{user.karma}}</li>
       <li>
         <span class="label">about:</span>
-        <div class="about" v-html="user.about"></div>
+        <div class="about">
+          {{{user.about}}}
+        </div>
       </li>
     </ul>
     <p class="links">
-      <a href="https://news.ycombinator.com/submitted?id={{user.id}}">submissions</a><br>
-      <a href="https://news.ycombinator.com/threads?id={{user.id}}">comments</a>
+      <a bind-href="'https://news.ycombinator.com/submitted?id=' + user.id">submissions</a><br>
+      <a bind-href="'https://news.ycombinator.com/threads?id=' + user.id">comments</a>
     </p>
   </div>
 </template>

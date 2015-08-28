@@ -1,15 +1,15 @@
 <template>
   <li v-show="comment.text">
     <div class="comhead">
-      <a class="toggle" v-on="click: open = !open">{{open ? '[-]' : '[+]'}}</a>
-      <a href="#/user/{{comment.by}}">{{comment.by}}</a>
+      <a class="toggle" on-click="open = !open">{{open ? '[-]' : '[+]'}}</a>
+      <a bind-href="'#/user/' + comment.by">{{comment.by}}</a>
       {{comment.time | fromNow}} ago
     </div>
     <div class="comment-content" v-show="open">
       {{{comment.text}}}
     </div>
     <ul class="child-comments" v-if="comment.kids" v-show="open">
-      <comment v-for="comment in childComments" comment="{{comment}}"></comment>
+      <comment v-for="comment in childComments" prop-comment="comment"></comment>
     </ul>
   </li>
 </template>
