@@ -14,7 +14,7 @@
     <!-- main view -->
     <component
       class="view"
-      is="{{view}}"
+      bind-is="view"
       prop-params="params"
       keep-alive
       transition
