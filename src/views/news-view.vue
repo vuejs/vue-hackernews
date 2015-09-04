@@ -3,14 +3,14 @@
     <!-- item list -->
     <item
       v-for="item in items"
-      prop-item="item"
-      prop-index="getItemIndex($index)"
+      bind-item="item"
+      bind-index="getItemIndex($index)"
       track-by="id">
     </item>
     <!-- navigation -->
     <div class="nav" v-show="items.length > 0">
-      <a v-if="params.page > 1" bind-href="'#/news/' + params.page - 1">&lt; prev</a>
-      <a v-if="params.page < 4" bind-href="'#/news/' + params.page + 1">more...</a>
+      <a v-if="params.page > 1" bind-href="'#/news/' + (params.page - 1)">&lt; prev</a>
+      <a v-if="params.page < 4" bind-href="'#/news/' + (params.page + 1)">more...</a>
     </div>
   </div>
 </template>
@@ -60,7 +60,8 @@ module.exports = {
       }.bind(this))
     },
     getItemIndex: function (index) {
-      return (this.displayPage - 1) * store.storiesPerPage + index + 1
+      var i = (this.displayPage - 1) * store.storiesPerPage + index + 1
+      return i
     }
   }
 }

@@ -9,7 +9,7 @@
       {{{comment.text}}}
     </div>
     <ul class="child-comments" v-if="comment.kids" v-show="open">
-      <comment v-for="comment in childComments" prop-comment="comment"></comment>
+      <comment v-for="comment in childComments" bind-comment="comment"></comment>
     </ul>
   </li>
 </template>

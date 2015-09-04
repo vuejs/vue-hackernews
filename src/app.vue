@@ -15,7 +15,7 @@
     <component
       class="view"
       bind-is="view"
-      prop-params="params"
+      bind-params="params"
       keep-alive
       transition
       transition-mode="out-in">
