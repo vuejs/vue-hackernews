@@ -14,8 +14,8 @@
     <!-- main view -->
     <component
       class="view"
-      bind-is="view"
-      bind-params="params"
+      :is="view"
+      :params="params"
       keep-alive
       transition
       transition-mode="out-in">

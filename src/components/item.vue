@@ -2,7 +2,7 @@
   <div class="item">
     <span class="index">{{index}}.</span>
     <p>
-      <a class="title" bind-href="href" target="_blank">{{item.title}}</a>
+      <a class="title" :href="href" target="_blank">{{item.title}}</a>
       <span class="domain" v-show="showDomain">
         ({{item.url | domain}})
       </span>
@@ -10,11 +10,11 @@
     <p class="subtext">
       <span v-show="showInfo">
         {{item.score}} points by
-        <a bind-href="'#/user/' + item.by">{{item.by}}</a>
+        <a :href="'#/user/' + item.by">{{item.by}}</a>
       </span>
       {{item.time | fromNow}} ago
       <span class="comments-link" v-show="showInfo">
-        | <a bind-href="'#/item/' + item.id">{{item.descendants}} comments</a>
+        | <a :href="'#/item/' + item.id">{{item.descendants}} comments</a>
       </span>
     </p>
   </div>

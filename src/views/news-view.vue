@@ -1,16 +1,16 @@
 <template>
-  <div class="news-view" bind-class="{ loading: !items.length }">
+  <div class="news-view" :class="{ loading: !items.length }">
     <!-- item list -->
     <item
       v-for="item in items"
-      bind-item="item"
-      bind-index="getItemIndex($index)"
+      :item="item"
+      :index="getItemIndex($index)"
       track-by="id">
     </item>
     <!-- navigation -->
     <div class="nav" v-show="items.length > 0">
-      <a v-if="params.page > 1" bind-href="'#/news/' + (params.page - 1)">&lt; prev</a>
-      <a v-if="params.page < 4" bind-href="'#/news/' + (params.page + 1)">more...</a>
+      <a v-if="params.page > 1" :href="'#/news/' + (params.page - 1)">&lt; prev</a>
+      <a v-if="params.page < 4" :href="'#/news/' + (params.page + 1)">more...</a>
     </div>
   </div>
 </template>

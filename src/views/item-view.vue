@@ -1,6 +1,6 @@
 <template>
   <div class="item-view" v-show="item">
-    <item bind-item="item"></item>
+    <item :item="item"></item>
     <ul class="poll-options" v-if="pollOptions">
       <li v-for="option in pollOptions">
         <p>{{option.text}}</p>
@@ -10,7 +10,7 @@
     <ul class="comments" v-if="comments">
       <comment
         v-for="comment in comments"
-        bind-comment="comment">
+        :comment="comment">
       </comment>
     </ul>
     <p v-show="!comments.length">No comments yet.</p>
