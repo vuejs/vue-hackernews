@@ -28,6 +28,6 @@
   "dependencies": {
     "director": "^1.2.8",
     "firebase": "^2.2.4",
-    "vue": "yyx990803/vue#1.0.0-alpha"
+    "vue": "yyx990803/vue#1.0.0-beta"
   }
 }
