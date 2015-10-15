@@ -1,5 +1,5 @@
 module.exports = {
-  entry: ['webpack/hot/dev-server', './src/main.js'],
+  entry: './src/main.js',
   output: {
     publicPath: '/static/',
     filename: 'build.js'
