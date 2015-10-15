@@ -4,8 +4,8 @@
   "description": "HN clone with Vue.js using HN API",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack --watch",
-    "build": "webpack"
+    "dev": "webpack-dev-server --hot --config build/webpack.dev.config.js --content-base ./",
+    "build": "webpack --config build/webpack.build.config.js"
   },
   "repository": {
     "type": "git",
@@ -18,16 +18,17 @@
   },
   "homepage": "https://github.com/yyx990803/vue-hackernews",
   "devDependencies": {
-    "css-loader": "^0.14.4",
-    "html-loader": "^0.3.0",
-    "style-loader": "^0.12.3",
-    "stylus-loader": "^1.2.0",
-    "vue-loader": "2.0.0",
-    "webpack": "^1.8.4"
+    "css-loader": "^0.19.0",
+    "style-loader": "^0.12.4",
+    "stylus-loader": "^1.4.0",
+    "vue-html-loader": "^1.0.0",
+    "vue-loader": "^4.0.0",
+    "webpack": "^1.12.2",
+    "webpack-dev-server": "^1.12.0"
   },
   "dependencies": {
     "director": "^1.2.8",
-    "firebase": "^2.2.4",
-    "vue": "yyx990803/vue#1.0.0-beta"
+    "firebase": "^2.3.1",
+    "vue": "^1.0.0"
   }
 }

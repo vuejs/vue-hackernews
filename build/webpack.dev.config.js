@@ -1,8 +1,8 @@
 module.exports = {
-  entry: "./src/main.js",
+  entry: ['webpack/hot/dev-server', './src/main.js'],
   output: {
-    path: './build',
-    filename: "build.js"
+    path: './static',
+    filename: 'build.js'
   },
   module: {
     loaders: [
