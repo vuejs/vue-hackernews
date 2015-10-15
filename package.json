@@ -4,7 +4,7 @@
   "description": "HN clone with Vue.js using HN API",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --hot --config build/webpack.dev.config.js --content-base ./",
+    "dev": "webpack-dev-server --hot --config build/webpack.dev.config.js",
     "build": "webpack --config build/webpack.build.config.js"
   },
   "repository": {
