@@ -1,12 +1,12 @@
 module.exports = {
   entry: ['webpack/hot/dev-server', './src/main.js'],
   output: {
-    path: './static',
+    publicPath: '/static/',
     filename: 'build.js'
   },
   module: {
     loaders: [
-      { test: /\.vue$/, loader: "vue-loader" },
+      { test: /\.vue$/, loader: 'vue' },
     ]
   },
   devtool: '#source-map'
