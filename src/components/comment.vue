@@ -5,9 +5,9 @@
       <a :href="'#/user/' + comment.by">{{comment.by}}</a>
       {{comment.time | fromNow}} ago
     </div>
-    <div class="comment-content" v-show="open">
+    <p class="comment-content" v-show="open">
       {{{comment.text}}}
-    </div>
+    </p>
     <ul class="child-comments" v-if="comment.kids" v-show="open">
       <comment v-for="comment in childComments" :comment="comment"></comment>
     </ul>
@@ -54,6 +54,7 @@ module.exports = {
 
 .comment-content
   margin 0 0 16px 24px
+  word-wrap break-word
   code
     white-space pre-wrap
 
