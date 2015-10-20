@@ -29,9 +29,9 @@ export default {
   },
   route: {
     data ({ to }) {
-      store.fetchUser(to.params.id, (user) => {
-        this.user = user
-      })
+      return {
+        user: store.fetchUser(to.params.id)
+      }
     }
   }
 }

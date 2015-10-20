@@ -1,11 +1,13 @@
 import Firebase from 'firebase'
 import { EventEmitter } from 'events'
+import { Promise } from 'es6-promise'
 
 const api = new Firebase('https://hacker-news.firebaseio.com/v0')
-let cachedStoryIds = []
-const cachedStories = {}
+const itemsCache = Object.create(null)
 const store = new EventEmitter()
 const storiesPerPage = store.storiesPerPage = 30
+
+let topStoryIds = []
 
 export default store
 
@@ -14,9 +16,9 @@ export default store
  * and cache the IDs locally.
  */
 
-api.child('topstories').on('value', (snapshot) => {
-  cachedStoryIds = snapshot.val()
-  store.emit('update')
+api.child('topstories').on('value', snapshot => {
+  topStoryIds = snapshot.val()
+  store.emit('topstories-updated')
 })
 
 /**
@@ -26,15 +28,17 @@ api.child('topstories').on('value', (snapshot) => {
  * @param {Function} cb(item)
  */
 
-store.fetchItem = (id, cb) => {
-  if (cachedStories[id]) {
-    cb(cachedStories[id])
-  } else {
-    api.child('item/' + id).once('value', function (snapshot) {
-      const story = cachedStories[id] = snapshot.val()
-      cb(story)
-    })
-  }
+store.fetchItem = id => {
+  return new Promise((resolve, reject) => {
+    if (itemsCache[id]) {
+      resolve(itemsCache[id])
+    } else {
+      api.child('item/' + id).once('value', snapshot => {
+        const story = itemsCache[id] = snapshot.val()
+        resolve(story)
+      }, reject)
+    }
+  })
 }
 
 /**
@@ -44,19 +48,12 @@ store.fetchItem = (id, cb) => {
  * @param {Function} cb(items)
  */
 
-store.fetchItems = (ids, cb) => {
+store.fetchItems = ids => {
   if (!ids || !ids.length) {
-    return cb([])
+    return Promise.resolve([])
+  } else {
+    return Promise.all(ids.map(id => store.fetchItem(id)))
   }
-  const items = []
-  ids.forEach((id) => {
-    store.fetchItem(id, (item) => {
-      items.push(item)
-      if (items.length >= ids.length) {
-        cb(items)
-      }
-    })
-  })
 }
 
 /**
@@ -66,11 +63,11 @@ store.fetchItems = (ids, cb) => {
  * @param {Function} cb(stories)
  */
 
-store.fetchItemsByPage = (page, cb) => {
+store.fetchItemsByPage = page => {
   const start = (page - 1) * storiesPerPage
   const end = page * storiesPerPage
-  const ids = cachedStoryIds.slice(start, end)
-  store.fetchItems(ids, cb)
+  const ids = topStoryIds.slice(start, end)
+  return store.fetchItems(ids)
 }
 
 /**
@@ -80,8 +77,10 @@ store.fetchItemsByPage = (page, cb) => {
  * @param {Function} cb(user)
  */
 
-store.fetchUser = (id, cb) => {
-  api.child('user/' + id).once('value', (snapshot) => {
-    cb(snapshot.val())
+store.fetchUser = id => {
+  return new Promise((resolve, reject) => {
+    api.child('user/' + id).once('value', snapshot => {
+      resolve(snapshot.val())
+    }, reject)
   })
 }

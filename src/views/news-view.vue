@@ -4,13 +4,13 @@
     <item
       v-for="item in items"
       :item="item"
-      :index="getItemIndex($index)"
+      :index="$index | formatItemIndex"
       track-by="id">
     </item>
     <!-- navigation -->
     <div class="nav" v-show="items.length > 0">
-      <a v-if="displayPage > 1" :href="'#/news/' + (displayPage - 1)">&lt; prev</a>
-      <a v-if="displayPage < 4" :href="'#/news/' + (displayPage + 1)">more...</a>
+      <a v-if="page > 1" :href="'#/news/' + (page - 1)">&lt; prev</a>
+      <a v-if="page < 4" :href="'#/news/' + (page + 1)">more...</a>
     </div>
   </div>
 </template>
@@ -20,39 +20,41 @@ import store from '../store'
 import Item from '../components/item.vue'
 
 export default {
-  components: {
-    item: Item
-  },
   data () {
     return {
-      displayPage: 1,
+      page: 1,
       items: []
     }
   },
-  created () {
-    this.onUpdate = () => {
-      this.update(this.$route.params.page)
-    }
-    store.on('update', this.onUpdate)
-  },
-  destroyed () {
-    store.removeListener('update', this.onUpdate)
-  },
   route: {
     data ({ to }) {
-      this.update(to.params.page)
+      const page = +to.params.page
+      return store.fetchItemsByPage(page).then(items => ({
+        page,
+        items
+      }))
     }
   },
+  created () {
+    store.on('topstories-updated', this.update)
+  },
+  destroyed () {
+    store.removeListener('topstories-updated', this.update)
+  },
   methods: {
-    update (page) {
-      store.fetchItemsByPage(page, (items) => {
+    update () {
+      store.fetchItemsByPage(this.page).then(items => {
         this.items = items
-        this.displayPage = +page
       })
-    },
-    getItemIndex (index) {
-      return (this.displayPage - 1) * store.storiesPerPage + index + 1
     }
+  },
+  filters: {
+    formatItemIndex (index) {
+      return (this.page - 1) * store.storiesPerPage + index + 1
+    }
+  },
+  components: {
+    item: Item
   }
 }
 </script>

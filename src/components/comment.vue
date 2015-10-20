@@ -30,7 +30,7 @@ export default {
   },
   created () {
     if (this.comment.kids) {
-      store.fetchItems(this.comment.kids, (comments) => {
+      store.fetchItems(this.comment.kids).then(comments => {
         this.childComments = comments
       })
     }

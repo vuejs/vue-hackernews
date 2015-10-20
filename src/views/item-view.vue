@@ -23,42 +23,27 @@ import Item from '../components/item.vue'
 import Comment from '../components/comment.vue'
 
 export default {
-  components: {
-    item: Item,
-    comment: Comment
-  },
   data () {
     return {
       item: {},
-      pollOptions: null,
-      comments: []
+      comments: [],
+      pollOptions: null
     }
   },
   route: {
     data ({ to }) {
-      this.load(to.params.id)
+      return store.fetchItem(to.params.id).then(item => ({
+        item,
+        comments: store.fetchItems(item.kids),
+        pollOptions: item.type === 'poll'
+          ? store.fetchItems(item.parts)
+          : null
+      }))
     }
   },
-  methods: {
-    load (id) {
-      store.fetchItem(id, (item) => {
-        this.item = item
-        this.fetchComments()
-        if (item.type === 'poll') {
-          this.fetchPollOptions()
-        }
-      })
-    },
-    fetchComments () {
-      store.fetchItems(this.item.kids, (comments) => {
-        this.comments = comments
-      })
-    },
-    fetchPollOptions () {
-      store.fetchItems(this.item.parts, (options) => {
-        this.pollOptions = options
-      })
-    }
+  components: {
+    item: Item,
+    comment: Comment
   }
 }
 </script>
