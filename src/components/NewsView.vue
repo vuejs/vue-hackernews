@@ -17,7 +17,7 @@
 
 <script>
 import store from '../store'
-import Item from '../components/item.vue'
+import Item from './Item.vue'
 
 export default {
   data () {

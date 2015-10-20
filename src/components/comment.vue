@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="stylus">
-@import "../shared.styl"
+@import "../variables.styl"
 
 .comhead
   color $gray

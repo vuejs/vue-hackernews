@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import { domain, fromNow } from './filters'
-import App from './app.vue'
-import NewsView from './views/news-view.vue'
-import ItemView from './views/item-view.vue'
-import UserView from './views/user-view.vue'
+import App from './components/App.vue'
+import NewsView from './components/NewsView.vue'
+import ItemView from './components/ItemView.vue'
+import UserView from './components/UserView.vue'
 
 // install router
 Vue.use(Router)

@@ -41,7 +41,7 @@ export default {
 </script>
 
 <style lang="stylus">
-@import "../shared.styl"
+@import "../variables.styl"
 
 .item
   padding 2px 0 2px 40px

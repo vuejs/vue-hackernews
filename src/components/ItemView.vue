@@ -19,8 +19,8 @@
 
 <script>
 import store from '../store'
-import Item from '../components/item.vue'
-import Comment from '../components/comment.vue'
+import Item from './Item.vue'
+import Comment from './Comment.vue'
 
 export default {
   data () {
@@ -49,7 +49,8 @@ export default {
 </script>
 
 <style lang="stylus">
-@import "../shared.styl"
+@import "../variables.styl"
+
 .item-view
   .item
     padding-left 0
