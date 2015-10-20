@@ -32,7 +32,7 @@
   "dependencies": {
     "es6-promise": "^3.0.2",
     "firebase": "^2.3.1",
-    "vue": "^1.0.0",
+    "vue": "^1.0.0-rc.1",
     "vue-router": "^0.7.4"
   }
 }
