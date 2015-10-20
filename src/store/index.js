@@ -25,7 +25,7 @@ api.child('topstories').on('value', snapshot => {
  * Fetch an item data with given id.
  *
  * @param {Number} id
- * @param {Function} cb(item)
+ * @return {Promise}
  */
 
 store.fetchItem = id => {
@@ -45,7 +45,7 @@ store.fetchItem = id => {
  * Fetch the given list of items.
  *
  * @param {Array<Number>} ids
- * @param {Function} cb(items)
+ * @return {Promise}
  */
 
 store.fetchItems = ids => {
@@ -60,7 +60,7 @@ store.fetchItems = ids => {
  * Fetch items for the given page.
  *
  * @param {Number} page
- * @param {Function} cb(stories)
+ * @return {Promise}
  */
 
 store.fetchItemsByPage = page => {
@@ -74,7 +74,7 @@ store.fetchItemsByPage = page => {
  * Fetch a user data with given id.
  *
  * @param {Number} id
- * @param {Function} cb(user)
+ * @return {Promise}
  */
 
 store.fetchUser = id => {
