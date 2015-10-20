@@ -29,6 +29,8 @@ export default {
   },
   route: {
     data ({ to }) {
+      // Promise sugar syntax: return an object that contains Promise fields.
+      // http://router.vuejs.org/en/pipeline/data.html#promise-sugar
       return {
         user: store.fetchUser(to.params.id)
       }

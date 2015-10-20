@@ -12,6 +12,8 @@ module.exports = {
     loaders: [
       {
         test: /\.vue$/,
+        // apply ES2015 transform to all JavaScript in *.vue files.
+        // https://github.com/vuejs/vue-loader#advanced-loader-configuration
         loader: vue.withLoaders({
           js: 'babel?optional[]=runtime&loose=all'
         })
