@@ -18,50 +18,46 @@
 </template>
 
 <script>
-var store = require('../store')
-var Item = require('../components/item.vue')
-var Comment = require('../components/comment.vue')
+import store from '../store'
+import Item from '../components/item.vue'
+import Comment from '../components/comment.vue'
 
-module.exports = {
-  props: {
-    params: Object
+export default {
+  components: {
+    item: Item,
+    comment: Comment
   },
-  data: function () {
+  data () {
     return {
       item: {},
       pollOptions: null,
       comments: []
     }
   },
-  components: {
-    item: Item,
-    comment: Comment
-  },
-  watch: {
-    'params.itemId': 'update'
-  },
-  compiled: function () {
-    this.update()
+  route: {
+    data ({ to }) {
+      this.load(to.params.id)
+    }
   },
   methods: {
-    update: function () {
-      store.fetchItem(this.params.itemId, function (item) {
+    load (id) {
+      store.fetchItem(id, (item) => {
         this.item = item
         this.fetchComments()
         if (item.type === 'poll') {
           this.fetchPollOptions()
         }
-      }.bind(this))
+      })
     },
-    fetchComments: function () {
-      store.fetchItems(this.item.kids, function (comments) {
+    fetchComments () {
+      store.fetchItems(this.item.kids, (comments) => {
         this.comments = comments
-      }.bind(this))
+      })
     },
-    fetchPollOptions: function () {
-      store.fetchItems(this.item.parts, function (options) {
+    fetchPollOptions () {
+      store.fetchItems(this.item.parts, (options) => {
         this.pollOptions = options
-      }.bind(this))
+      })
     }
   }
 }

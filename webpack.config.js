@@ -12,7 +12,16 @@ module.exports = {
     loaders: [
       {
         test: /\.vue$/,
-        loader: 'vue'
+        loader: vue.withLoaders({
+          js: 'babel?optional[]=runtime&loose=all'
+        })
+      },
+      {
+        test: /\.js$/,
+        // excluding some local linked packages.
+        // not needed for normal installations
+        exclude: /node_modules|vue\/src|vue-loader\//,
+        loader: 'babel?optional[]=runtime&loose=all'
       }
     ]
   }

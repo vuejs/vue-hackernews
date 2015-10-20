@@ -21,20 +21,19 @@
 </template>
 
 <script>
-module.exports = {
-  replace: true,
+export default {
   props: {
     item: Object,
     index: Number
   },
   computed: {
-    href: function () {
+    href () {
       return this.item.url || ('#/item/' + this.item.id)
     },
-    showInfo: function () {
+    showInfo () {
       return this.item.type === 'story' || this.item.type === 'poll'
     },
-    showDomain: function () {
+    showDomain () {
       return this.item.type === 'story'
     }
   }

@@ -15,24 +15,24 @@
 </template>
 
 <script>
-var store = require('../store')
+import store from '../store'
 
-module.exports = {
+export default {
   name: 'comment', // for recursively using self
   props: {
     comment: Object
   },
-  data: function () {
+  data () {
     return {
       childComments: [],
       open: true
     }
   },
-  created: function () {
+  created () {
     if (this.comment.kids) {
-      store.fetchItems(this.comment.kids, function (comments) {
+      store.fetchItems(this.comment.kids, (comments) => {
         this.childComments = comments
-      }.bind(this))
+      })
     }
   }
 }

@@ -9,59 +9,49 @@
     </item>
     <!-- navigation -->
     <div class="nav" v-show="items.length > 0">
-      <a v-if="params.page > 1" :href="'#/news/' + (params.page - 1)">&lt; prev</a>
-      <a v-if="params.page < 4" :href="'#/news/' + (params.page + 1)">more...</a>
+      <a v-if="displayPage > 1" :href="'#/news/' + (displayPage - 1)">&lt; prev</a>
+      <a v-if="displayPage < 4" :href="'#/news/' + (displayPage + 1)">more...</a>
     </div>
   </div>
 </template>
 
 <script>
-var store = require('../store')
-var Item = require('../components/item.vue')
+import store from '../store'
+import Item from '../components/item.vue'
 
-module.exports = {
-  props: {
-    params: {
-      type: Object,
-      default: function () {
-        return { page: 1 }
-      }
-    }
+export default {
+  components: {
+    item: Item
   },
-  data: function () {
+  data () {
     return {
       displayPage: 1,
       items: []
     }
   },
-  components: {
-    item: Item
+  created () {
+    this.onUpdate = () => {
+      this.update(this.$route.params.page)
+    }
+    store.on('update', this.onUpdate)
   },
-  watch: {
-    'params.page': function () {
-      this.update(true)
+  destroyed () {
+    store.removeListener('update', this.onUpdate)
+  },
+  route: {
+    data ({ to }) {
+      this.update(to.params.page)
     }
   },
-  compiled: function () {
-    this.update()
-    store.on('update', this.update)
-  },
-  destroyed: function () {
-    store.removeListener('update', this.update)
-  },
   methods: {
-    update: function (switchingPage) {
-      store.fetchItemsByPage(this.params.page, function (items) {
+    update (page) {
+      store.fetchItemsByPage(page, (items) => {
         this.items = items
-        this.displayPage = this.params.page
-        if (switchingPage) {
-          window.scrollTo(0, 0)
-        }
-      }.bind(this))
+        this.displayPage = +page
+      })
     },
-    getItemIndex: function (index) {
-      var i = (this.displayPage - 1) * store.storiesPerPage + index + 1
-      return i
+    getItemIndex (index) {
+      return (this.displayPage - 1) * store.storiesPerPage + index + 1
     }
   }
 }

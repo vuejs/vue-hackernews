@@ -19,33 +19,19 @@
 </template>
 
 <script>
-var store = require('../store')
+import store from '../store'
 
-module.exports = {
-  props: {
-    params: {
-      type: Object,
-      default: function () {
-        return { userId: null }
-      }
-    }
-  },
-  data: function () {
+export default {
+  data () {
     return {
       user: {}
     }
   },
-  watch: {
-    'params.userId': 'update'
-  },
-  compiled: function () {
-    this.update()
-  },
-  methods: {
-    update: function () {
-      store.fetchUser(this.params.userId, function (user) {
+  route: {
+    data ({ to }) {
+      store.fetchUser(to.params.id, (user) => {
         this.user = user
-      }.bind(this))
+      })
     }
   }
 }

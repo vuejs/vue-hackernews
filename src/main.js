@@ -1,44 +1,39 @@
-/**
- * Boot up the Vue instance and wire up the router.
- */
+import Vue from 'vue'
+import Router from 'vue-router'
+import { domain, fromNow } from './filters'
+import App from './app.vue'
+import NewsView from './views/news-view.vue'
+import ItemView from './views/item-view.vue'
+import UserView from './views/user-view.vue'
 
-var Vue = require('vue')
-var Router = require('director').Router
-
-// strict mode
-Vue.config.strict = true
+// install router
+Vue.use(Router)
 
 // register filters globally
-Vue.filter('fromNow', require('./filters/from-now'))
-Vue.filter('domain', require('./filters/domain'))
-
-// app instance
-var app = new Vue(require('./app.vue'))
+Vue.filter('fromNow', fromNow)
+Vue.filter('domain', domain)
 
 // routing
 var router = new Router()
 
-router.on('/news/:page', function (page) {
-  app.view = 'news-view'
-  app.params.page = +page
-})
-
-router.on('/user/:id', function (id) {
-  window.scrollTo(0, 0)
-  app.view = 'user-view'
-  app.params.userId = id
-})
-
-router.on('/item/:id', function (id) {
-  window.scrollTo(0, 0)
-  app.view = 'item-view'
-  app.params.itemId = id
-})
-
-router.configure({
-  notfound: function () {
-    router.setRoute('/news/1')
+router.map({
+  '/news/:page': {
+    component: NewsView
+  },
+  '/user/:id': {
+    component: UserView
+  },
+  '/item/:id': {
+    component: ItemView
   }
 })
 
-router.init('/news/1')
+router.beforeEach(function () {
+  window.scrollTo(0, 0)
+})
+
+router.redirect({
+  '*': '/news/1'
+})
+
+router.start(App, '#app')
