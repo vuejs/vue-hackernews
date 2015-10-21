@@ -22,7 +22,7 @@ module.exports = {
         test: /\.js$/,
         // excluding some local linked packages.
         // not needed for normal installations
-        exclude: /node_modules|vue\/src|vue-loader\//,
+        exclude: /node_modules|vue\/src|vue-loader\/|vue-hot-reload-api\//,
         loader: 'babel'
       }
     ]
