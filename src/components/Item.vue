@@ -22,10 +22,12 @@
 
 <script>
 export default {
+
   props: {
     item: Object,
     index: Number
   },
+
   computed: {
     href () {
       return this.item.url || ('#/item/' + this.item.id)

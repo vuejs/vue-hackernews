@@ -20,12 +20,18 @@ import store from '../store'
 import Item from './Item.vue'
 
 export default {
+
+  components: {
+    Item
+  },
+
   data () {
     return {
       page: 1,
       items: []
     }
   },
+
   route: {
     data ({ to }) {
       // This is the route data hook. It gets called every time the route
@@ -48,12 +54,15 @@ export default {
       }))
     }
   },
+
   created () {
     store.on('topstories-updated', this.update)
   },
+
   destroyed () {
     store.removeListener('topstories-updated', this.update)
   },
+
   methods: {
     update () {
       store.fetchItemsByPage(this.page).then(items => {
@@ -61,13 +70,11 @@ export default {
       })
     }
   },
+
   filters: {
     formatItemIndex (index) {
       return (this.page - 1) * store.storiesPerPage + index + 1
     }
-  },
-  components: {
-    item: Item
   }
 }
 </script>

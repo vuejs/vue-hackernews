@@ -22,11 +22,13 @@
 import store from '../store'
 
 export default {
+
   data () {
     return {
       user: {}
     }
   },
+
   route: {
     data ({ to }) {
       // Promise sugar syntax: return an object that contains Promise fields.

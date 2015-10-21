@@ -23,6 +23,12 @@ import Item from './Item.vue'
 import Comment from './Comment.vue'
 
 export default {
+
+  components: {
+    Item,
+    Comment
+  },
+
   data () {
     return {
       item: {},
@@ -30,6 +36,7 @@ export default {
       pollOptions: null
     }
   },
+
   route: {
     data ({ to }) {
       return store.fetchItem(to.params.id).then(item => ({
@@ -41,10 +48,6 @@ export default {
           : null
       }))
     }
-  },
-  components: {
-    item: Item,
-    comment: Comment
   }
 }
 </script>

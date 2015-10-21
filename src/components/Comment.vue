@@ -18,16 +18,20 @@
 import store from '../store'
 
 export default {
+
   name: 'comment', // for recursively using self
+
   props: {
     comment: Object
   },
+
   data () {
     return {
       childComments: [],
       open: true
     }
   },
+
   created () {
     if (this.comment.kids) {
       store.fetchItems(this.comment.kids).then(comments => {
