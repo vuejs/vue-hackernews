@@ -26,6 +26,10 @@ module.exports = {
         loader: 'babel'
       }
     ]
+  },
+  babel: {
+    optional: ['runtime'],
+    loose: 'all'
   }
 }
 
