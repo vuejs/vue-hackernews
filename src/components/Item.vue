@@ -2,7 +2,7 @@
   <div class="item">
     <span class="index">{{index}}.</span>
     <p>
-      <a class="title" :href="href" target="_blank">{{item.title}}</a>
+      <a class="title" :href="href" target="_blank">{{{item.title}}}</a>
       <span class="domain" v-show="showDomain">
         ({{item.url | domain}})
       </span>
