@@ -12,24 +12,16 @@ module.exports = {
     loaders: [
       {
         test: /\.vue$/,
-        // apply ES2015 transform to all JavaScript in *.vue files.
-        // https://github.com/vuejs/vue-loader#advanced-loader-configuration
-        loader: vue.withLoaders({
-          js: 'babel'
-        })
+        loader: 'vue'
       },
       {
         test: /\.js$/,
         // excluding some local linked packages.
-        // not needed for normal installations
-        exclude: /node_modules|vue\/src|vue-loader\/|vue-hot-reload-api\//,
-        loader: 'babel'
+        // for normal use cases only node_modules is needed.
+        exclude: /node_modules|vue\/src|vue-router\/|vue-loader\/|vue-hot-reload-api\//,
+        loader: 'babel?optional[]=runtime&loose=all'
       }
     ]
-  },
-  babel: {
-    optional: ['runtime'],
-    loose: 'all'
   }
 }
 
