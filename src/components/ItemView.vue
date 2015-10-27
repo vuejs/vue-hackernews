@@ -24,6 +24,8 @@ import Comment from './Comment.vue'
 
 export default {
 
+  name: 'ItemView',
+
   components: {
     Item,
     Comment

@@ -23,6 +23,8 @@
 <script>
 export default {
 
+  name: 'Item',
+
   props: {
     item: Object,
     index: Number

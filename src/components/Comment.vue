@@ -19,7 +19,7 @@ import store from '../store'
 
 export default {
 
-  name: 'comment', // for recursively using self
+  name: 'Comment',
 
   props: {
     comment: Object

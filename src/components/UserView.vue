@@ -23,6 +23,8 @@ import store from '../store'
 
 export default {
 
+  name: 'UserView',
+
   data () {
     return {
       user: {}
