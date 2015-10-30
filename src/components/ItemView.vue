@@ -13,7 +13,7 @@
         :comment="comment">
       </comment>
     </ul>
-    <p v-show="!comments.length">No comments yet.</p>
+    <p v-show="!comments.length && item.type !== 'job'">No comments yet.</p>
   </div>
 </template>
 
