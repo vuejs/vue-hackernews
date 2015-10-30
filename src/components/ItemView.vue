@@ -1,6 +1,7 @@
 <template>
   <div class="item-view" v-show="item">
     <item :item="item"></item>
+    <p class="jobtext" v-if="isJob" v-html="item.text"></p>
     <ul class="poll-options" v-if="pollOptions">
       <li v-for="option in pollOptions">
         <p>{{option.text}}</p>
@@ -13,7 +14,7 @@
         :comment="comment">
       </comment>
     </ul>
-    <p v-show="!comments.length && item.type !== 'job'">No comments yet.</p>
+    <p v-show="!comments.length && !isJob">No comments yet.</p>
   </div>
 </template>
 
@@ -50,6 +51,12 @@ export default {
           : null
       }))
     }
+  },
+
+  computed: {
+    isJob () {
+      return this.item.type === 'job'
+    }
   }
 }
 </script>
@@ -73,4 +80,9 @@ export default {
     .subtext
       color $gray
       font-size 11px
+  .jobtext
+    color $gray
+    margin-top 0
+  .jobtext p
+    margin 10px 0
 </style>

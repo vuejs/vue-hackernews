@@ -17,7 +17,6 @@
         | <a :href="'#/item/' + item.id">{{item.descendants}} {{item.descendants | pluralize 'comment'}}</a>
       </span>
     </p>
-    <p class="jobtext" v-show="isJob" v-html="item.text"></p>
   </div>
 </template>
 
@@ -40,9 +39,6 @@ export default {
     },
     showDomain () {
       return this.item.type === 'story'
-    },
-    isJob () {
-      return this.item.type === 'job'
     }
   }
 }
@@ -73,9 +69,4 @@ export default {
       color $gray
   .subtext a:hover
     text-decoration underline
-  .jobtext
-    color $gray
-    padding-top 5px
-  .jobtext p
-    margin 10px 0
 </style>
