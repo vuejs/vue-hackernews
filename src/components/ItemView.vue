@@ -1,7 +1,7 @@
 <template>
   <div class="item-view" v-show="item">
     <item :item="item"></item>
-    <p class="jobtext" v-if="isJob" v-html="item.text"></p>
+    <p class="itemtext" v-if="hasText" v-html="item.text"></p>
     <ul class="poll-options" v-if="pollOptions">
       <li v-for="option in pollOptions">
         <p>{{option.text}}</p>
@@ -56,6 +56,10 @@ export default {
   computed: {
     isJob () {
       return this.item.type === 'job'
+    },
+
+    hasText () {
+      return this.item.hasOwnProperty('text')
     }
   }
 }
@@ -80,9 +84,10 @@ export default {
     .subtext
       color $gray
       font-size 11px
-  .jobtext
+  .itemtext
     color $gray
     margin-top 0
-  .jobtext p
+    margin-bottom 30px
+  .itemtext p
     margin 10px 0
 </style>
