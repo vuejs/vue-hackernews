@@ -4,7 +4,7 @@
   "description": "HN clone with Vue.js using HN API",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server --inline --hot --quiet",
+    "dev": "webpack-dev-server --inline --hot --no-info",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "repository": {
@@ -25,11 +25,11 @@
     "babel-runtime": "^5.8.0",
     "cross-env": "^1.0.5",
     "css-loader": "^0.21.0",
-    "style-loader": "^0.13.0",
     "stylus-loader": "^1.4.0",
     "vue-hot-reload-api": "^1.2.0",
     "vue-html-loader": "^1.0.0",
-    "vue-loader": "^7.2.0",
+    "vue-loader": "^8.0.0",
+    "vue-style-loader": "^1.0.0",
     "webpack": "^1.12.2",
     "webpack-dev-server": "^1.12.0"
   },
