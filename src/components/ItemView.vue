@@ -51,7 +51,8 @@ export default {
           pollOptions: item.type === 'poll'
             ? store.fetchItems(item.parts)
             : null
-        }})
+        }
+      })
     }
   },
 
