@@ -50,6 +50,7 @@ export default {
       //    the entire object, because we don't want to update the page before
       //    the items are fetched.
       const page = +to.params.page
+      document.title = 'Vue.js HN Clone'
       return store.fetchItemsByPage(page).then(items => ({
         page,
         items
