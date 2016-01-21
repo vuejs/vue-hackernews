@@ -42,14 +42,16 @@ export default {
 
   route: {
     data ({ to }) {
-      return store.fetchItem(to.params.id).then(item => ({
-        item,
-        // the final resolved data can further contain Promises
-        comments: store.fetchItems(item.kids),
-        pollOptions: item.type === 'poll'
-          ? store.fetchItems(item.parts)
-          : null
-      }))
+      return store.fetchItem(to.params.id).then(item => {
+        document.title = item.title + ' | Vue.js HN Clone'
+        return {
+          item,
+          // the final resolved data can further contain Promises
+          comments: store.fetchItems(item.kids),
+          pollOptions: item.type === 'poll'
+            ? store.fetchItems(item.parts)
+            : null
+        }})
     }
   },
 
