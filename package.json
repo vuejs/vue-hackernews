@@ -2,7 +2,6 @@
   "name": "vue-hackernews",
   "version": "1.0.0",
   "description": "HN clone with Vue.js using HN API",
-  "main": "main.js",
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --no-info",
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
