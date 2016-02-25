@@ -1,6 +1,6 @@
 # Vue.js HackerNews clone
 
-[Live demo](http://yyx990803.github.io/vue-hackernews/)
+[Live demo](http://vuejs.github.io/vue-hackernews/)
 
 Built with [Vue.js](http://vuejs.org) and the official [HackerNews API](https://github.com/HackerNews/API), with routing, comments, comment folding, user profile & realtime updates.
 
