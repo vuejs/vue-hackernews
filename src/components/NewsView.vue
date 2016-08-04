@@ -9,8 +9,8 @@
     </item>
     <!-- navigation -->
     <div class="nav" v-show="items.length > 0">
-      <a v-if="page > 1" :href="'#/news/' + (page - 1)">&lt; prev</a>
-      <a v-if="page < 4" :href="'#/news/' + (page + 1)">more...</a>
+      <a v-if="page > 1" v-link="{ name: 'news', params: {page: page - 1}}>&lt; prev</a>
+      <a v-if="page < 4" v-link="{ name: 'news', params: {page: page + 1}}">more...</a>
     </div>
   </div>
 </template>

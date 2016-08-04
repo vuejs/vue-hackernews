@@ -2,7 +2,7 @@
   <li v-show="comment.text">
     <div class="comhead">
       <a class="toggle" @click="open = !open">{{open ? '[-]' : '[+]'}}</a>
-      <a :href="'#/user/' + comment.by">{{comment.by}}</a>
+      <a v-link="{ name: 'user', params: {id: comment.by}}">{{comment.by}}</a>
       {{comment.time | fromNow}} ago
     </div>
     <p class="comment-content" v-show="open">
