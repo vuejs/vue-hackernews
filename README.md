@@ -1,3 +1,5 @@
+> **NOTE**: this demo is using Vue.js 1.x - the 2.0 version is [here](https://github.com/vuejs/vue-hackernews-2.0).
+
 # Vue.js HackerNews clone
 
 [Live demo](http://vuejs.github.io/vue-hackernews/)
