@@ -1,8 +1,14 @@
-import Firebase from 'firebase'
+import Firebase from 'firebase/app'
+import Database from 'firebase/database'
 import { EventEmitter } from 'events'
 import { Promise } from 'es6-promise'
 
-const api = new Firebase('https://hacker-news.firebaseio.com/v0')
+const config = {
+  databaseURL: 'https://hacker-news.firebaseio.com'
+}
+Firebase.initializeApp(config)
+const version = '/v0'
+const api = Firebase.database().ref(version)
 const itemsCache = Object.create(null)
 const store = new EventEmitter()
 const storiesPerPage = store.storiesPerPage = 30
