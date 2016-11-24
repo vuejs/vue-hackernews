@@ -10,11 +10,11 @@
     <p class="subtext">
       <span v-show="showInfo">
         {{item.score}} points by
-        <a :href="'#/user/' + item.by">{{item.by}}</a>
+        <a v-link="{ name: 'user', params: {id: item.by}}">{{item.by}}</a>
       </span>
       {{item.time | fromNow}} ago
       <span class="comments-link" v-show="showInfo">
-        | <a :href="'#/item/' + item.id">{{item.descendants}} {{item.descendants | pluralize 'comment'}}</a>
+        | <a v-link="{ name: 'item', params: {id: item.id}}">{{item.descendants}} {{item.descendants | pluralize 'comment'}}</a>
       </span>
     </p>
   </div>
@@ -32,7 +32,7 @@ export default {
 
   computed: {
     href () {
-      return this.item.url || ('#/item/' + this.item.id)
+      return this.item.url || router.go({ name: 'item', params: { id: this.item.id }})
     },
     showInfo () {
       return this.item.type === 'story' || this.item.type === 'poll'

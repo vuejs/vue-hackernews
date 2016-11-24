@@ -14,17 +14,25 @@ Vue.filter('fromNow', fromNow)
 Vue.filter('domain', domain)
 
 // routing
-var router = new Router()
+var router = new Router({
+    // Remove hashbang
+    // history: true,
+    // hashbang: false,
+})
 
 router.map({
   '/news/:page': {
-    component: NewsView
+    component: NewsView,
+    // name is optional and only when you need named routes
+    name: 'news',
   },
   '/user/:id': {
-    component: UserView
+    component: UserView,
+    name: 'user',
   },
   '/item/:id': {
-    component: ItemView
+    component: ItemView,
+    name: 'item',
   }
 })
 
