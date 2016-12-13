@@ -20,6 +20,9 @@ npm run dev
 npm run build
 ```
 
+### Deploy
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/vuejs/vue-hackernews)
+
 ### License
 
 [MIT](http://opensource.org/licenses/MIT)
